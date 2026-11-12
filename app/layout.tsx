@@ -1,11 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { Cormorant_Garamond, Manrope } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
 
-const display = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-display', weight: ['400', '500', '600'], display: 'swap' });
-const sans = Manrope({ subsets: ['latin'], variable: '--font-sans', weight: ['400', '500', '600', '700'], display: 'swap' });
 
 export const metadata: Metadata = {
   applicationName: 'Treasured Genius',
@@ -31,5 +28,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: '#110E0D', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return <html lang="en" className={`${display.variable} ${sans.variable}`}><body><SmoothScroll />{children}</body></html>;
+  return <html lang="en"><head><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" /></head><body><SmoothScroll />{children}</body></html>;
 }
