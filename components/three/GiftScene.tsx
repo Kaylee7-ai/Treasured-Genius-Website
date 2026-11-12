@@ -75,7 +75,7 @@ function Scene({ reducedMotion, compact }: { reducedMotion: boolean; compact: bo
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.25, 0]} receiveShadow><planeGeometry args={[200, 200]} /><meshStandardMaterial color="#17100F" roughness={.88} metalness={.08} /></mesh>
     <ContactShadows position={[0, -1.2, 0]} opacity={.42} scale={6} blur={2.4} far={3} resolution={256} />
     {!reducedMotion && <EffectComposer multisampling={0}>
-      {!compact && <DepthOfField focusDistance={.018} focalLength={.018} bokehScale={.65} />}
+      {compact ? <></> : <DepthOfField focusDistance={.018} focalLength={.018} bokehScale={.65} />}
       <Bloom intensity={compact ? .12 : .22} luminanceThreshold={.86} luminanceSmoothing={.24} />
       <Vignette eskil={false} offset={.2} darkness={.48} />
     </EffectComposer>}

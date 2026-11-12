@@ -1,7 +1,14 @@
 name: CI
 
 on:
+  pull_request:
+    branches:
+      - main
+      - nextjs-upgrade
   push:
+    branches:
+      - main
+      - nextjs-upgrade
   workflow_dispatch:
 
 permissions:
