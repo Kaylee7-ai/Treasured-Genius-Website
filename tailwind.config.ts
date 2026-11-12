@@ -5,12 +5,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: '#110E0D',
-        burgundy: '#35151F',
-        champagne: '#C4A477',
-        ivory: '#EDE3D5',
-        taupe: '#65534A',
-        rose: '#D9B6A8',
+        background: 'var(--background)',
+        surface: 'var(--surface)',
+        emerald: 'var(--emerald)',
+        'emerald-highlight': 'var(--emerald-highlight)',
+        gold: 'var(--gold)',
+        'gold-highlight': 'var(--gold-highlight)',
+        text: 'var(--text)',
+        muted: 'var(--muted)',
       },
       fontFamily: {
         display: ['var(--font-display)'],
