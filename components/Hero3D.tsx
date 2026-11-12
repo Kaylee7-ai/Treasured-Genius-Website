@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Component, Suspense, useEffect, useState, type ErrorInfo, type ReactNode } from 'react';
+import { Component, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react';
 
 type BoundaryProps = { children: ReactNode; fallback: ReactNode };
 type BoundaryState = { failed: boolean };
@@ -32,6 +32,9 @@ function StaticSculpture() {
 
 export default function Hero3D() {
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [active, setActive] = useState(true);
+  const host = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const query = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReducedMotion(query.matches);
@@ -40,11 +43,19 @@ export default function Hero3D() {
     return () => query.removeEventListener('change', update);
   }, []);
 
-  return <div className="hero-art is-ready" aria-hidden="false">
+  useEffect(() => {
+    const node = host.current;
+    if (!node || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { rootMargin: '120px 0px' });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={host} className="hero-art is-ready" aria-hidden="false">
     {reducedMotion ? <StaticSculpture /> : (
       <SceneBoundary fallback={<StaticSculpture />}>
         <Suspense fallback={<div className="hero-scene-loading" role="status"><span className="loading-orbit" /><span>Preparing something thoughtful</span></div>}>
-          <GiftScene />
+          <GiftScene active={active} />
         </Suspense>
       </SceneBoundary>
     )}
