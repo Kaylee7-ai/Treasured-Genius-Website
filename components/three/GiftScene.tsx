@@ -13,13 +13,13 @@ const TAU = Math.PI * 2;
 function SatinMaterial() {
   return <meshPhysicalMaterial
     color={RIBBON}
-    metalness={0.85}
-    roughness={0.3}
-    clearcoat={0.42}
-    clearcoatRoughness={0.24}
+    metalness={0.18}
+    roughness={0.42}
+    clearcoat={0.32}
+    clearcoatRoughness={0.3}
     sheen={1}
-    sheenColor="#E8CF8A"
-    sheenRoughness={0.24}
+    sheenColor="#F3DDA5"
+    sheenRoughness={0.36}
     polygonOffset
     polygonOffsetFactor={-1}
     polygonOffsetUnits={-1}
@@ -206,20 +206,16 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
   const dragOffset = useRef(0);
   const autoAngle = useRef(0);
 
-  useEffect(() => {
-    if (reducedMotion || !intro.current) return;
-    gsap.fromTo(intro.current.scale, { x: 0.88, y: 0.88, z: 0.88 }, { x: 1, y: 1, z: 1, duration: 1.8, ease: 'power3.out' });
-  }, [reducedMotion]);
-
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (!group.current || reducedMotion) return;
-    autoAngle.current = (autoAngle.current + delta * TAU / 20) % TAU;
+    // Slow, level product turntable rotation; no floating or rocking motion.
+    autoAngle.current = (autoAngle.current + delta * TAU / 48) % TAU;
     if (!dragging.current) {
-      dragOffset.current = THREE.MathUtils.damp(dragOffset.current, dragTarget.current, 5, delta);
+      dragOffset.current = THREE.MathUtils.damp(dragOffset.current, dragTarget.current, 3.5, delta);
     }
-    group.current.position.y = -0.12 + Math.sin(state.clock.elapsedTime * 0.62) * 0.035;
     group.current.rotation.y = autoAngle.current + dragOffset.current;
-    group.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.34) * 0.008;
+    group.current.rotation.x = 0;
+    group.current.rotation.z = 0;
   });
 
   const beginDrag = (event: ThreeEvent<PointerEvent>) => {
@@ -258,12 +254,12 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
   >
     <group ref={intro} scale={0.9}>
       <RoundedBox args={[2.3, 1.48, 1.72]} radius={0.045} smoothness={6} position={[0, -0.12, 0]} castShadow receiveShadow>
-        <meshPhysicalMaterial color="#0B3D2E" roughness={0.3} metalness={0.06} clearcoat={0.88} clearcoatRoughness={0.22} sheen={0.42} sheenColor="#14614A" sheenRoughness={0.34} />
+        <meshPhysicalMaterial color="#08291F" roughness={0.76} metalness={0.015} clearcoat={0.12} clearcoatRoughness={0.58} sheen={0.72} sheenColor="#174B3A" sheenRoughness={0.82} />
       </RoundedBox>
 
       {/* One clean, slightly overhanging lid; no separate seam strip. */}
       <RoundedBox args={[2.46, 0.2, 1.88]} radius={0.04} smoothness={6} position={[0, 0.73, 0]} castShadow receiveShadow>
-        <meshPhysicalMaterial color="#14614A" roughness={0.29} metalness={0.06} clearcoat={0.92} clearcoatRoughness={0.2} sheen={0.42} sheenColor="#0B3D2E" />
+        <meshPhysicalMaterial color="#0B3327" roughness={0.7} metalness={0.015} clearcoat={0.14} clearcoatRoughness={0.55} sheen={0.68} sheenColor="#174B3A" sheenRoughness={0.78} />
       </RoundedBox>
 
       {/* Each wrap is one continuous surface-following loop, including the underside. */}
@@ -297,17 +293,13 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
       />
 
       <group position={[0, 1.0, 0.12]}>
-        <SatinLoop angle={-0.22} size={0.68} depth={0.12} />
-        <SatinLoop angle={0.55} size={0.62} depth={0.16} />
-        <SatinLoop angle={1.25} size={0.57} depth={0.13} />
-        <SatinLoop angle={2.0} size={0.66} depth={0.17} />
-        <SatinLoop angle={2.72} size={0.59} depth={0.12} />
-        <SatinLoop angle={3.42} size={0.65} depth={0.16} />
-        <SatinLoop angle={4.15} size={0.56} depth={0.13} />
-        <SatinLoop angle={4.88} size={0.63} depth={0.15} />
+        <SatinLoop angle={-0.28} size={0.7} depth={0.12} />
+        <SatinLoop angle={1.05} size={0.66} depth={0.15} />
+        <SatinLoop angle={2.55} size={0.7} depth={0.13} />
+        <SatinLoop angle={4.1} size={0.64} depth={0.15} />
         <mesh position={[0, 0.02, 0.13]} castShadow>
           <sphereGeometry args={[0.14, 32, 24]} />
-          <meshPhysicalMaterial color="#E8CF8A" metalness={0.85} roughness={0.28} clearcoat={0.7} clearcoatRoughness={0.18} />
+          <meshPhysicalMaterial color="#C6A45B" metalness={0.58} roughness={0.34} clearcoat={0.35} clearcoatRoughness={0.28} />
         </mesh>
       </group>
       <SatinTail position={[-0.36, 0.47, 0.89]} rotation={[0, 0, -0.08]} />
@@ -333,9 +325,9 @@ function Scene({ reducedMotion }: { reducedMotion: boolean }) {
     <color attach="background" args={['#07120D']} />
     <fog attach="fog" args={['#07120D', 8, 18]} />
     <StudioEnvironment />
-    <ambientLight intensity={0.16} color="#B9B3A0" />
-    <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#E8CF8A" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0008} shadow-normalBias={0.02} />
-    <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={8} color="#D9B98F" />
+    <ambientLight intensity={0.28} color="#D8D0BE" />
+    <spotLight position={[-4.5, 6, 5]} angle={0.5} penumbra={1} intensity={34} color="#F2E6CA" castShadow shadow-mapSize={[2048, 2048]} shadow-bias={-0.0008} shadow-normalBias={0.02} />
+    <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={13} color="#D9B98F" />
     <GiftSculpture reducedMotion={reducedMotion} />
     <GlossFloor />
     <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#020805" />
