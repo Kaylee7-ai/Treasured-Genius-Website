@@ -8,12 +8,23 @@ const display = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-displ
 const sans = Manrope({ subsets: ['latin'], variable: '--font-sans', weight: ['400', '500', '600', '700'], display: 'swap' });
 
 export const metadata: Metadata = {
-  title: 'Treasured Genius — The Art of Giving',
-  description: 'Thoughtful gifts for the moments and people that matter. Discover Treasured Genius in Accra.',
+  applicationName: 'Treasured Genius',
+  title: {
+    default: 'Treasured Genius — The Art of Giving',
+    template: '%s | Treasured Genius',
+  },
+  description: 'Thoughtful gifts for the moments and people that matter. Discover Treasured Genius in Accra, Ghana.',
   openGraph: {
     title: 'Treasured Genius — The Art of Giving',
     description: 'A little more than a gift. A moment to remember.',
+    siteName: 'Treasured Genius',
     type: 'website',
+    locale: 'en_GH',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Treasured Genius — The Art of Giving',
+    description: 'A little more than a gift. A moment to remember.',
   },
 };
 
