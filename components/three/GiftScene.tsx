@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame, type ThreeEvent } from '@react-three/fiber';
+import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { ContactShadows, Environment, Lightformer, RoundedBox } from '@react-three/drei';
 import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
@@ -117,6 +117,7 @@ function SatinTail({ position, rotation = [0, 0, 0] }: { position: [number, numb
 }
 
 function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
+  const { gl } = useThree();
   const group = useRef<THREE.Group>(null);
   const intro = useRef<THREE.Group>(null);
   const dragging = useRef(false);
@@ -146,8 +147,7 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
     event.stopPropagation();
     dragging.current = true;
     lastPointerX.current = event.clientX;
-    const pointerTarget = event.target;
-    if (pointerTarget instanceof HTMLElement) pointerTarget.setPointerCapture(event.pointerId);
+    gl.domElement.setPointerCapture(event.pointerId);
   };
 
   const moveDrag = (event: ThreeEvent<PointerEvent>) => {
@@ -164,8 +164,7 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
     event.stopPropagation();
     dragging.current = false;
     dragTarget.current = 0;
-    const pointerTarget = event.target;
-    if (pointerTarget instanceof HTMLElement) pointerTarget.releasePointerCapture(event.pointerId);
+    if (gl.domElement.hasPointerCapture(event.pointerId)) gl.domElement.releasePointerCapture(event.pointerId);
   };
 
   return <group
