@@ -1,0 +1,42 @@
+{
+  "name": "treasured-genius",
+  "version": "1.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@gsap/react": "2.1.2",
+    "@react-three/drei": "10.0.7",
+    "@react-three/fiber": "9.0.4",
+    "@react-three/postprocessing": "3.0.4",
+    "gsap": "3.12.7",
+    "lenis": "1.1.20",
+    "next": "15.5.9",
+    "postprocessing": "6.36.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "three": "0.172.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3.2.0",
+    "@types/node": "22.10.5",
+    "@types/react": "19.0.3",
+    "@types/react-dom": "19.0.2",
+    "@types/three": "0.172.0",
+    "autoprefixer": "10.4.20",
+    "eslint": "9.17.0",
+    "eslint-config-next": "15.5.9",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.7.2"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.0.0"
+  }
+}
