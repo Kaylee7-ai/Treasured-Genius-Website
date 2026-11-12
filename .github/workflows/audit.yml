@@ -1,0 +1,50 @@
+name: Dependency audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "package.json"
+      - ".github/workflows/audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Production and full dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate lockfile without changing package.json
+        run: npm install --package-lock-only
+
+      - name: Audit production dependencies
+        shell: bash
+        run: |
+          echo "===== PRODUCTION DEPENDENCY AUDIT (npm audit --omit=dev) ====="
+          set +e
+          npm audit --omit=dev
+          production_status=$?
+          echo "PRODUCTION_AUDIT_EXIT_CODE=$production_status"
+          echo "===== END PRODUCTION DEPENDENCY AUDIT ====="
+
+      - name: Audit all dependencies
+        shell: bash
+        run: |
+          echo "===== FULL DEPENDENCY AUDIT (npm audit) ====="
+          set +e
+          npm audit
+          full_status=$?
+          echo "FULL_AUDIT_EXIT_CODE=$full_status"
+          echo "===== END FULL DEPENDENCY AUDIT ====="
+          echo "Audit reports were generated. A non-zero npm audit exit code indicates reported vulnerabilities, not a workflow execution failure."
