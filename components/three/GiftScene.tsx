@@ -7,7 +7,7 @@ import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import gsap from 'gsap';
 
-const RIBBON = '#D8B98D';
+const RIBBON = '#D4AF37';
 const TAU = Math.PI * 2;
 
 function SatinMaterial() {
@@ -18,7 +18,7 @@ function SatinMaterial() {
     clearcoat={0.42}
     clearcoatRoughness={0.24}
     sheen={1}
-    sheenColor="#FFF0D8"
+    sheenColor="#E8CF8A"
     sheenRoughness={0.24}
     polygonOffset
     polygonOffsetFactor={-1}
@@ -178,9 +178,9 @@ function GlossFloor() {
         const radius = Math.min(1, Math.sqrt(dx * dx + dy * dy));
         const glow = Math.pow(Math.max(0, 1 - radius), 1.7);
         const i = (y * size + x) * 4;
-        data[i] = Math.round(16 + glow * 17);
-        data[i + 1] = Math.round(13 + glow * 10);
-        data[i + 2] = Math.round(14 + glow * 12);
+        data[i] = Math.round(7 + glow * 4);
+        data[i + 1] = Math.round(18 + glow * 55);
+        data[i + 2] = Math.round(13 + glow * 35);
         data[i + 3] = 255;
       }
     }
@@ -192,7 +192,7 @@ function GlossFloor() {
   useEffect(() => () => texture.dispose(), [texture]);
   return <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.285, 0]} receiveShadow>
     <planeGeometry args={[30, 30]} />
-    <meshPhysicalMaterial map={texture} color="#FFFFFF" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
+    <meshPhysicalMaterial map={texture} color="#0E1F17" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
   </mesh>;
 }
 
@@ -258,12 +258,12 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
   >
     <group ref={intro} scale={0.9}>
       <RoundedBox args={[2.3, 1.48, 1.72]} radius={0.045} smoothness={6} position={[0, -0.12, 0]} castShadow receiveShadow>
-        <meshPhysicalMaterial color="#421A28" roughness={0.3} metalness={0.025} clearcoat={0.88} clearcoatRoughness={0.22} sheen={0.42} sheenColor="#8E485A" sheenRoughness={0.34} />
+        <meshPhysicalMaterial color="#0B3D2E" roughness={0.3} metalness={0.06} clearcoat={0.88} clearcoatRoughness={0.22} sheen={0.42} sheenColor="#14614A" sheenRoughness={0.34} />
       </RoundedBox>
 
       {/* One clean, slightly overhanging lid; no separate seam strip. */}
       <RoundedBox args={[2.46, 0.2, 1.88]} radius={0.04} smoothness={6} position={[0, 0.73, 0]} castShadow receiveShadow>
-        <meshPhysicalMaterial color="#4A202E" roughness={0.29} metalness={0.025} clearcoat={0.92} clearcoatRoughness={0.2} sheen={0.42} sheenColor="#985064" />
+        <meshPhysicalMaterial color="#14614A" roughness={0.29} metalness={0.06} clearcoat={0.92} clearcoatRoughness={0.2} sheen={0.42} sheenColor="#0B3D2E" />
       </RoundedBox>
 
       {/* Each wrap is one continuous surface-following loop, including the underside. */}
@@ -307,7 +307,7 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
         <SatinLoop angle={4.88} size={0.63} depth={0.15} />
         <mesh position={[0, 0.02, 0.13]} castShadow>
           <sphereGeometry args={[0.14, 32, 24]} />
-          <meshPhysicalMaterial color="#E4C79D" metalness={0.85} roughness={0.28} clearcoat={0.7} clearcoatRoughness={0.18} />
+          <meshPhysicalMaterial color="#E8CF8A" metalness={0.85} roughness={0.28} clearcoat={0.7} clearcoatRoughness={0.18} />
         </mesh>
       </group>
       <SatinTail position={[-0.36, 0.47, 0.89]} rotation={[0, 0, -0.08]} />
@@ -319,26 +319,26 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
 function StudioEnvironment() {
   return <Environment resolution={256}>
     <group>
-      <Lightformer form="rect" intensity={3.1} color="#FFF0D9" scale={[7, 4, 1]} position={[-1, 5, 1]} />
-      <Lightformer form="rect" intensity={2.2} color="#E8BD8C" scale={[3, 5, 1]} position={[-4, 1, 2]} rotation={[0, Math.PI / 3, 0]} />
-      <Lightformer form="rect" intensity={1.4} color="#D7DCE5" scale={[3, 5, 1]} position={[4, 1, -2]} rotation={[0, -Math.PI / 3, 0]} />
-      <Lightformer form="rect" intensity={1.8} color="#D9B98F" scale={[5, 3, 1]} position={[0, 3, -5]} rotation={[0, Math.PI, 0]} />
-      <Lightformer form="rect" intensity={0.8} color="#FFFFFF" scale={[2, 2, 1]} position={[0, -2, 3]} rotation={[Math.PI / 2, 0, 0]} />
+      <Lightformer form="rect" intensity={3.1} color="#E8CF8A" scale={[7, 4, 1]} position={[-1, 5, 1]} />
+      <Lightformer form="rect" intensity={2.2} color="#D4AF37" scale={[3, 5, 1]} position={[-4, 1, 2]} rotation={[0, Math.PI / 3, 0]} />
+      <Lightformer form="rect" intensity={1.4} color="#F6F1E4" scale={[3, 5, 1]} position={[4, 1, -2]} rotation={[0, -Math.PI / 3, 0]} />
+      <Lightformer form="rect" intensity={1.8} color="#14614A" scale={[5, 3, 1]} position={[0, 3, -5]} rotation={[0, Math.PI, 0]} />
+      <Lightformer form="rect" intensity={0.8} color="#F6F1E4" scale={[2, 2, 1]} position={[0, -2, 3]} rotation={[Math.PI / 2, 0, 0]} />
     </group>
   </Environment>;
 }
 
 function Scene({ reducedMotion }: { reducedMotion: boolean }) {
   return <>
-    <color attach="background" args={['#110E0D']} />
-    <fog attach="fog" args={['#110E0D', 8, 18]} />
+    <color attach="background" args={['#07120D']} />
+    <fog attach="fog" args={['#07120D', 8, 18]} />
     <StudioEnvironment />
-    <ambientLight intensity={0.16} color="#E8D4B8" />
-    <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#FFE8CC" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0008} shadow-normalBias={0.02} />
+    <ambientLight intensity={0.16} color="#B9B3A0" />
+    <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#E8CF8A" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0008} shadow-normalBias={0.02} />
     <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={8} color="#D9B98F" />
     <GiftSculpture reducedMotion={reducedMotion} />
     <GlossFloor />
-    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#080607" />
+    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#020805" />
     {!reducedMotion && <EffectComposer multisampling={4}>
       <Bloom intensity={0.045} luminanceThreshold={1.12} luminanceSmoothing={0.08} />
       <Vignette eskil={false} offset={0.24} darkness={0.4} />
