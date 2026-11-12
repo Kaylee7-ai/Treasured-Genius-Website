@@ -146,7 +146,8 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
     event.stopPropagation();
     dragging.current = true;
     lastPointerX.current = event.clientX;
-    event.target.setPointerCapture?.(event.pointerId);
+    const pointerTarget = event.target;
+    if (pointerTarget instanceof HTMLElement) pointerTarget.setPointerCapture(event.pointerId);
   };
 
   const moveDrag = (event: ThreeEvent<PointerEvent>) => {
@@ -163,7 +164,8 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
     event.stopPropagation();
     dragging.current = false;
     dragTarget.current = 0;
-    event.target.releasePointerCapture?.(event.pointerId);
+    const pointerTarget = event.target;
+    if (pointerTarget instanceof HTMLElement) pointerTarget.releasePointerCapture(event.pointerId);
   };
 
   return <group
