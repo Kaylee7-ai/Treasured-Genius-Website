@@ -13,10 +13,10 @@ const TAU = Math.PI * 2;
 function SatinMaterial() {
   return <meshPhysicalMaterial
     color={RIBBON}
-    metalness={0.28}
-    roughness={0.31}
-    clearcoat={0.85}
-    clearcoatRoughness={0.2}
+    metalness={0.85}
+    roughness={0.3}
+    clearcoat={0.42}
+    clearcoatRoughness={0.24}
     sheen={1}
     sheenColor="#FFF0D8"
     sheenRoughness={0.24}
@@ -55,7 +55,7 @@ function RibbonWrap({
       const center = curve.getPointAt(t);
       const tangent = curve.getTangentAt(t).normalize();
       const normal = tangent.clone().cross(axis).normalize();
-      const surface = center.addScaledVector(normal, 0.004);
+      const surface = center.addScaledVector(normal, 0.003);
       const left = surface.clone().addScaledVector(axis, -width / 2);
       const right = surface.clone().addScaledVector(axis, width / 2);
       vertices.push(left.x, left.y, left.z, right.x, right.y, right.z);
@@ -85,34 +85,114 @@ function RibbonWrap({
   </mesh>;
 }
 
-function SatinPetal({ position, rotation, scale = 1 }: { position: [number, number, number]; rotation: [number, number, number]; scale?: number }) {
-  const shape = useMemo(() => {
-    const s = new THREE.Shape();
-    s.moveTo(0, 0);
-    s.bezierCurveTo(-0.12, 0.28, -0.42, 0.58, -0.68, 0.42);
-    s.bezierCurveTo(-0.98, 0.22, -0.78, -0.18, -0.42, -0.22);
-    s.bezierCurveTo(-0.18, -0.24, -0.06, -0.1, 0, 0);
-    return s;
-  }, []);
-  return <mesh position={position} rotation={rotation} scale={scale} castShadow>
-    <extrudeGeometry args={[shape, { depth: 0.045, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 0.018, bevelThickness: 0.012, curveSegments: 28 }]} />
+function SatinLoop({ angle, size, depth = 0.12 }: { angle: number; size: number; depth?: number }) {
+  const geometry = useMemo(() => {
+    const points: THREE.Vector3[] = [];
+    const segments = 96;
+    for (let i = 0; i <= segments; i += 1) {
+      const t = (i / segments) * Math.PI * 2;
+      const x = size * (0.48 + 0.48 * Math.cos(t));
+      const y = size * 0.34 * Math.sin(t);
+      const z = depth * Math.sin(t * 2) + 0.025 * Math.cos(t);
+      points.push(new THREE.Vector3(x, y, z));
+    }
+    const curve = new THREE.CatmullRomCurve3(points, false, 'centripetal', 0.18);
+    const frames = curve.computeFrenetFrames(segments, false);
+    const positions: number[] = [];
+    const uvs: number[] = [];
+    const indices: number[] = [];
+    const ribbonWidth = 0.115;
+    for (let i = 0; i <= segments; i += 1) {
+      const p = curve.getPointAt(i / segments);
+      const n = frames.normals[i];
+      const left = p.clone().addScaledVector(n, -ribbonWidth / 2);
+      const right = p.clone().addScaledVector(n, ribbonWidth / 2);
+      positions.push(left.x, left.y, left.z, right.x, right.y, right.z);
+      uvs.push(0, i / segments, 1, i / segments);
+      if (i < segments) {
+        const a = i * 2;
+        indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    g.setIndex(indices);
+    g.computeVertexNormals();
+    return g;
+  }, [size, depth]);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return <mesh geometry={geometry} rotation={[0.08 * Math.sin(angle), 0, angle]} castShadow receiveShadow>
     <SatinMaterial />
   </mesh>;
 }
 
 function SatinTail({ position, rotation = [0, 0, 0] }: { position: [number, number, number]; rotation?: [number, number, number] }) {
-  const shape = useMemo(() => {
-    const s = new THREE.Shape();
-    s.moveTo(-0.15, 0.34);
-    s.bezierCurveTo(-0.2, 0.05, -0.19, -0.38, -0.16, -0.68);
-    s.lineTo(0.12, -0.79);
-    s.bezierCurveTo(0.1, -0.46, 0.2, -0.04, 0.15, 0.34);
-    s.closePath();
-    return s;
+  const geometry = useMemo(() => {
+    const curve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0, 0.28, 0),
+      new THREE.Vector3(-0.025, 0.08, 0.025),
+      new THREE.Vector3(0.035, -0.2, 0.08),
+      new THREE.Vector3(0.09, -0.48, 0.12),
+      new THREE.Vector3(0.035, -0.72, 0.1),
+    ], false, 'centripetal', 0.2);
+    const segments = 72;
+    const frames = curve.computeFrenetFrames(segments, false);
+    const positions: number[] = [];
+    const uvs: number[] = [];
+    const indices: number[] = [];
+    for (let i = 0; i <= segments; i += 1) {
+      const p = curve.getPointAt(i / segments);
+      const side = frames.normals[i];
+      const width = 0.25 * (0.9 + 0.1 * Math.sin(Math.PI * i / segments));
+      const left = p.clone().addScaledVector(side, -width / 2);
+      const right = p.clone().addScaledVector(side, width / 2);
+      positions.push(left.x, left.y, left.z, right.x, right.y, right.z);
+      uvs.push(0, i / segments, 1, i / segments);
+      if (i < segments) {
+        const a = i * 2;
+        indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
+      }
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    g.setIndex(indices);
+    g.computeVertexNormals();
+    return g;
   }, []);
-  return <mesh position={position} rotation={rotation} castShadow>
-    <extrudeGeometry args={[shape, { depth: 0.04, bevelEnabled: true, bevelSegments: 3, bevelSize: 0.012, bevelThickness: 0.01, curveSegments: 20 }]} />
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return <mesh geometry={geometry} position={position} rotation={rotation} castShadow receiveShadow>
     <SatinMaterial />
+  </mesh>;
+}
+
+function GlossFloor() {
+  const texture = useMemo(() => {
+    const size = 256;
+    const data = new Uint8Array(size * size * 4);
+    for (let y = 0; y < size; y += 1) {
+      for (let x = 0; x < size; x += 1) {
+        const dx = (x + 0.5 - size / 2) / (size / 2);
+        const dy = (y + 0.5 - size / 2) / (size / 2);
+        const radius = Math.min(1, Math.sqrt(dx * dx + dy * dy));
+        const glow = Math.pow(Math.max(0, 1 - radius), 1.7);
+        const i = (y * size + x) * 4;
+        data[i] = Math.round(16 + glow * 17);
+        data[i + 1] = Math.round(13 + glow * 10);
+        data[i + 2] = Math.round(14 + glow * 12);
+        data[i + 3] = 255;
+      }
+    }
+    const map = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+    map.colorSpace = THREE.SRGBColorSpace;
+    map.needsUpdate = true;
+    return map;
+  }, []);
+  useEffect(() => () => texture.dispose(), [texture]);
+  return <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.285, 0]} receiveShadow>
+    <planeGeometry args={[30, 30]} />
+    <meshPhysicalMaterial map={texture} color="#FFFFFF" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
   </mesh>;
 }
 
@@ -216,16 +296,18 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
         ]}
       />
 
-      <group position={[0, 0.99, 0.12]}>
-        <SatinPetal position={[-0.2, 0.02, 0]} rotation={[0.02, 0, -0.32]} scale={0.83} />
-        <SatinPetal position={[0.2, 0.02, 0]} rotation={[-0.02, 0, Math.PI + 0.32]} scale={0.83} />
-        <SatinPetal position={[-0.34, 0.02, -0.12]} rotation={[0.18, -0.2, -0.82]} scale={0.7} />
-        <SatinPetal position={[0.34, 0.02, -0.12]} rotation={[-0.18, 0.2, Math.PI + 0.82]} scale={0.7} />
-        <SatinPetal position={[-0.17, 0.08, -0.2]} rotation={[0.28, 0.12, -1.35]} scale={0.58} />
-        <SatinPetal position={[0.17, 0.08, -0.2]} rotation={[-0.28, -0.12, Math.PI + 1.35]} scale={0.58} />
-        <mesh position={[0, 0.045, 0.12]} castShadow>
-          <sphereGeometry args={[0.145, 32, 24]} />
-          <meshPhysicalMaterial color="#E4C79D" metalness={0.62} roughness={0.19} clearcoat={1} clearcoatRoughness={0.12} />
+      <group position={[0, 1.0, 0.12]}>
+        <SatinLoop angle={-0.22} size={0.68} depth={0.12} />
+        <SatinLoop angle={0.55} size={0.62} depth={0.16} />
+        <SatinLoop angle={1.25} size={0.57} depth={0.13} />
+        <SatinLoop angle={2.0} size={0.66} depth={0.17} />
+        <SatinLoop angle={2.72} size={0.59} depth={0.12} />
+        <SatinLoop angle={3.42} size={0.65} depth={0.16} />
+        <SatinLoop angle={4.15} size={0.56} depth={0.13} />
+        <SatinLoop angle={4.88} size={0.63} depth={0.15} />
+        <mesh position={[0, 0.02, 0.13]} castShadow>
+          <sphereGeometry args={[0.14, 32, 24]} />
+          <meshPhysicalMaterial color="#E4C79D" metalness={0.85} roughness={0.28} clearcoat={0.7} clearcoatRoughness={0.18} />
         </mesh>
       </group>
       <SatinTail position={[-0.36, 0.47, 0.89]} rotation={[0, 0, -0.08]} />
@@ -252,13 +334,10 @@ function Scene({ reducedMotion }: { reducedMotion: boolean }) {
     <fog attach="fog" args={['#110E0D', 8, 18]} />
     <StudioEnvironment />
     <ambientLight intensity={0.16} color="#E8D4B8" />
-    <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#FFE8CC" castShadow shadow-mapSize={[1024, 1024]} />
+    <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#FFE8CC" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0008} shadow-normalBias={0.02} />
     <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={8} color="#D9B98F" />
     <GiftSculpture reducedMotion={reducedMotion} />
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.285, 0]} receiveShadow>
-      <planeGeometry args={[200, 200]} />
-      <meshPhysicalMaterial color="#100D0D" roughness={0.3} metalness={0.2} clearcoat={0.25} clearcoatRoughness={0.34} />
-    </mesh>
+    <GlossFloor />
     <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#080607" />
     {!reducedMotion && <EffectComposer multisampling={4}>
       <Bloom intensity={0.045} luminanceThreshold={1.12} luminanceSmoothing={0.08} />
