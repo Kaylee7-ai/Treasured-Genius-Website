@@ -322,3 +322,16 @@ insert into public.settings(key, value) values
   ('service_information', '""'::jsonb),
   ('nfc_mobile_payments', 'true'::jsonb)
 on conflict (key) do nothing;
+
+
+drop policy if exists "TG public reads website display settings" on public.settings;
+create policy "TG public reads website display settings"
+  on public.settings for select to anon, authenticated
+  using (key in (
+    'contact_phone',
+    'opening_hours',
+    'delivery_information',
+    'service_information',
+    'nfc_mobile_payments'
+  ));
+grant select on public.settings to anon;
