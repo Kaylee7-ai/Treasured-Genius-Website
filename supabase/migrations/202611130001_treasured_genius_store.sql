@@ -315,3 +315,10 @@ values
   ('Crafts & Keepsakes', 'crafts-keepsakes', 'Creative craft projects and keepsakes.', 3),
   ('Business Branding', 'business-branding', 'Printed materials and designs for businesses.', 4)
 on conflict (slug) do nothing;
+
+insert into public.settings(key, value) values
+  ('opening_hours', '"Listed opening time: 8:00 am. Please confirm the day’s hours with the shop."'::jsonb),
+  ('delivery_information', '"Ask the team about current delivery and collection options."'::jsonb),
+  ('service_information', '""'::jsonb),
+  ('nfc_mobile_payments', 'true'::jsonb)
+on conflict (key) do nothing;
