@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const collections = [
   { n: '01', name: 'For the moments', copy: 'A reason to celebrate, and a reason to remember.', tone: 'wine' },
   { n: '02', name: 'For someone special', copy: 'A considered gesture for the people who matter.', tone: 'sand' },
@@ -113,5 +115,21 @@ export function FinalCTA() {
   return <section className="final-cta section-pad">
     <p className="eyebrow">A THOUGHT IS A BEAUTIFUL BEGINNING</p><h2>Make their moment<br /><em>mean something.</em></h2>
     <a className="button button-gold" href="https://wa.me/233277018939?text=Hello%20Treasured%20Genius%2C%20I%20would%20love%20help%20choosing%20a%20thoughtful%20gift." target="_blank" rel="noreferrer">Begin a conversation <span>↗</span></a><div className="final-ornament" />
+  </section>;
+}
+
+
+export function RealWorkGallery() {
+  return <section id="real-work" className="real-work-section section-pad">
+    <div className="real-work-copy">
+      <p className="eyebrow">REAL WORK · REAL PERSONAL TOUCHES</p>
+      <h2>Made personal.<br /><em>Made to be treasured.</em></h2>
+      <p>Explore a selection of personalised gift sets, Bibles, drinkware and engraved keepsakes from Treasured Genius. These photographs were shared by the business; ask the team about current options, availability and pricing.</p>
+      <a className="text-link" href="https://wa.me/233277018939?text=Hello%20Treasured%20Genius%2C%20I%20saw%20your%20work%20on%20the%20website%20and%20would%20like%20to%20enquire." target="_blank" rel="noreferrer">Enquire about a custom piece <span>↗</span></a>
+    </div>
+    <div className="real-work-photo-wrap">
+      <Image src="/images/treasured-genius-real-work.jpg" alt="A collage of Treasured Genius personalised gift sets, NKJV Bibles, vacuum flasks, engraved chopping boards and wooden keepsakes" width={300} height={450} sizes="(max-width: 800px) 90vw, 42vw" className="real-work-photo" priority />
+      <span className="real-work-photo-caption">A SELECTION OF PERSONALised WORK FROM TREASURED GENIUS</span>
+    </div>
   </section>;
 }
