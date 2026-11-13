@@ -5,6 +5,21 @@ import { About, Collections, CraftPrinting, Experience, FeaturedProducts, FinalC
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 type SampleProduct = { id: string; name: string; slug: string };
+type BusinessSettings = {
+  contactPhone: string;
+  openingHours: string;
+  deliveryInformation: string;
+  serviceInformation: string;
+  nfcMobilePayments: boolean;
+};
+
+const defaultBusinessSettings: BusinessSettings = {
+  contactPhone: '+233 27 701 8939',
+  openingHours: 'Listed opening time: 8:00 am. Please confirm the day’s hours with the shop.',
+  deliveryInformation: 'Ask the team about current delivery and collection options.',
+  serviceInformation: '',
+  nfcMobilePayments: true,
+};
 
 export default async function Home({
   searchParams,
@@ -14,14 +29,33 @@ export default async function Home({
   const params = await searchParams;
   const supabase = await createSupabaseServerClient();
   let sampleProducts: SampleProduct[] = [];
+  let businessSettings = defaultBusinessSettings;
 
   if (supabase) {
-    const { data } = await supabase.from('products')
-      .select('id,name,slug')
-      .eq('is_active', true)
-      .order('sort_order')
-      .order('name');
-    sampleProducts = data ?? [];
+    const [{ data: products }, { data: settings }] = await Promise.all([
+      supabase.from('products')
+        .select('id,name,slug')
+        .eq('is_active', true)
+        .order('sort_order')
+        .order('name'),
+      supabase.from('settings').select('key,value').in('key', [
+        'contact_phone', 'opening_hours', 'delivery_information',
+        'service_information', 'nfc_mobile_payments',
+      ]),
+    ]);
+    sampleProducts = products ?? [];
+    const readString = (key: string, fallback: string) => {
+      const value = settings?.find((row) => row.key === key)?.value;
+      return typeof value === 'string' ? value : fallback;
+    };
+    const nfcValue = settings?.find((row) => row.key === 'nfc_mobile_payments')?.value;
+    businessSettings = {
+      contactPhone: readString('contact_phone', defaultBusinessSettings.contactPhone),
+      openingHours: readString('opening_hours', defaultBusinessSettings.openingHours),
+      deliveryInformation: readString('delivery_information', defaultBusinessSettings.deliveryInformation),
+      serviceInformation: readString('service_information', defaultBusinessSettings.serviceInformation),
+      nfcMobilePayments: typeof nfcValue === 'boolean' ? nfcValue : defaultBusinessSettings.nfcMobilePayments,
+    };
   }
 
   const initialProductId = sampleProducts.find((product) => product.slug === params.item)?.id;
@@ -49,7 +83,7 @@ export default async function Home({
       <About />
       <Collections />
       <FeaturedProducts />
-      <CraftPrinting />
+      <CraftPrinting serviceInformation={businessSettings.serviceInformation} />
       <CustomOrderForm
         sampleProducts={sampleProducts}
         initialProductId={initialProductId}
@@ -57,7 +91,12 @@ export default async function Home({
       />
       <Experience />
       <Reviews />
-      <Visit />
+      <Visit
+        contactPhone={businessSettings.contactPhone}
+        openingHours={businessSettings.openingHours}
+        deliveryInformation={businessSettings.deliveryInformation}
+        nfcMobilePayments={businessSettings.nfcMobilePayments}
+      />
       <FinalCTA />
       <footer className="site-footer">
         <a href="#top" className="footer-brand">TREASURED <i>GENIUS</i></a>
