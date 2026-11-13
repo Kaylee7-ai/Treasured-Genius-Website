@@ -1,7 +1,7 @@
 import Hero3D from '@/components/Hero3D';
 import Navigation from '@/components/Navigation';
 import CustomOrderForm from '@/components/CustomOrderForm';
-import { About, Collections, Experience, FeaturedProducts, FinalCTA, Reviews, Visit } from '@/components/sections/Sections';
+import { About, Collections, CraftPrinting, Experience, FeaturedProducts, FinalCTA, Reviews, Visit } from '@/components/sections/Sections';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 type SampleProduct = { id: string; name: string; slug: string };
@@ -37,10 +37,10 @@ export default async function Home({
       <Navigation />
       <section id="hero" className="hero-section">
         <div className="hero-copy">
-          <p className="eyebrow hero-eyebrow">A PRIVATE GIFTING ATELIER · ACCRA</p>
+          <p className="eyebrow hero-eyebrow">A CRAFT & PRINTING STUDIO · ACCRA</p>
           <h1>The art<br />of <em>giving.</em></h1>
           <p className="hero-subtitle">A little more than a gift.<br />A moment to remember.</p>
-          <a className="button button-gold" href="#collections">Discover the art <span>↘</span></a>
+          <a className="button button-gold" href="#collections">Explore custom work <span>↘</span></a>
           <span className="hero-index">01 <i>—</i> A THOUGHTFUL BEGINNING</span>
         </div>
         <Hero3D />
@@ -49,6 +49,7 @@ export default async function Home({
       <About />
       <Collections />
       <FeaturedProducts />
+      <CraftPrinting />
       <CustomOrderForm
         sampleProducts={sampleProducts}
         initialProductId={initialProductId}
