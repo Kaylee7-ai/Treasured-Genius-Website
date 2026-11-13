@@ -31,7 +31,7 @@ A responsive Next.js website for Treasured Genius, an Accra craft and printing s
 
 ## Requirements
 
-- Node.js 20.9 or newer
+- Node.js 22 or newer
 - npm 10 or newer
 
 ## Local development
