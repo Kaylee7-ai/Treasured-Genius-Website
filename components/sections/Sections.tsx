@@ -45,6 +45,27 @@ export function FeaturedProducts() {
   </section>;
 }
 
+export function CraftPrinting() {
+  return <section id="craft-printing" className="craft-printing-section section-pad">
+    <div className="craft-printing-intro">
+      <div>
+        <p className="eyebrow">CRAFT · PRINT · PERSONALISE</p>
+        <h2>Ideas made<br /><em>meaningful.</em></h2>
+      </div>
+      <div className="craft-printing-copy">
+        <p className="lead">A thoughtful idea deserves careful attention.</p>
+        <p>Treasured Genius is an Accra craft and printing shop offering custom designs and printed materials for personal and business projects. Tell us what you have in mind and our team can discuss the available options with you.</p>
+      </div>
+    </div>
+    <div className="craft-printing-services">
+      <article><span>01</span><h3>Custom printing</h3><p>Share the message, photograph, logo or design you would like to bring to life.</p></article>
+      <article><span>02</span><h3>Creative crafts</h3><p>Discuss a personal or business project and the finish you have in mind.</p></article>
+      <article><span>03</span><h3>Thoughtful gifting</h3><p>Explore gift ideas and ask the team about custom presentation and delivery options.</p></article>
+    </div>
+    <p className="craft-printing-note">Every custom project is reviewed individually. Materials, production methods, availability, price and timing are confirmed with the shop before work begins.</p>
+  </section>;
+}
+
 export function Experience() {
   return <section id="experience" className="experience-section section-pad">
     <p className="eyebrow">THE EXPERIENCE OF GIVING</p>
@@ -66,7 +87,7 @@ export function Reviews() {
 export function Visit() {
   return <section id="visit" className="visit-section section-pad">
     <div><p className="eyebrow">A LITTLE PLACE TO DISCOVER</p><h2>Come find<br /><em>your moment.</em></h2></div>
-    <div className="visit-details"><p>We would be delighted to help you find something meaningful.</p><p className="visit-address">Nsakina Street<br />Accra, Ghana</p><a className="text-link" href="https://www.google.com/maps/search/?api=1&query=Treasured+Genius+Nsakina+Street+Accra" target="_blank" rel="noreferrer">Get directions <span>↗</span></a><a className="visit-phone" href="tel:+233277018939">+233 27 701 8939</a><span className="visit-footnote">Please contact us to confirm opening hours and availability.</span></div>
+    <div className="visit-details"><p>Visit us on Nsakina Street or contact the team about your craft and printing project.</p><p className="visit-address">Nsakina Street<br />Accra, Ghana<br /><br />Listed opening time: 8:00 am<br />NFC mobile payments accepted</p><a className="text-link" href="https://www.google.com/maps/search/?api=1&query=Treasured+Genius+Nsakina+Street+Accra" target="_blank" rel="noreferrer">Get directions <span>↗</span></a><a className="visit-phone" href="tel:+233277018939">+233 27 701 8939</a><span className="visit-footnote">Please confirm the day’s opening hours, product availability and delivery arrangements with the team.</span></div>
   </section>;
 }
 
