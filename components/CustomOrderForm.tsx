@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, type FormEvent } from 'react';
-import { createSupabaseBrowserClient } from '@/lib/supabase/browser';
 
 type SampleProduct = { id: string; name: string; slug: string };
 type Props = {
@@ -67,6 +66,7 @@ export default function CustomOrderForm({
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setErrorMessage('');
     setRequestCode('');
 
@@ -83,11 +83,14 @@ export default function CustomOrderForm({
       return;
     }
 
-    const fileInput = event.currentTarget.elements.namedItem('artwork') as HTMLInputElement | null;
-    const files = Array.from(fileInput?.files ?? []);
+    const payload = new FormData(formElement);
+    const files = payload.getAll('artwork').filter(
+      (entry): entry is File => typeof File !== 'undefined' && entry instanceof File && entry.size > 0,
+    );
     if (
       files.length > 5
       || files.some((file) => !fileExtensions[file.type] || file.size > 5 * 1024 * 1024)
+      || files.reduce((total, file) => total + file.size, 0) > 20 * 1024 * 1024
     ) {
       setErrorMessage('Please attach up to 5 JPG, PNG, WebP, AVIF or PDF files. Each file must be 5 MB or smaller.');
       return;
@@ -120,54 +123,51 @@ export default function CustomOrderForm({
       return;
     }
 
+    payload.set('productLabel', itemLabel);
+    payload.set('productId', selectedSample?.id ?? '');
+    payload.set('itemDescription', productDescription.trim());
+    payload.set('designType', design);
+    payload.set('artworkDescription', artworkDescription.trim());
+    payload.set('designPlacement', placement);
+    payload.set('quantity', quantity);
+    payload.set('occasion', occasion);
+    payload.set('requestedDate', requestedDate);
+    payload.set('extraNotes', notes.trim());
+
     setIsSubmitting(true);
     try {
-      const requestKey = crypto.randomUUID();
-      const supabase = createSupabaseBrowserClient();
-      if (!supabase) throw new Error('The secure upload service is not available. Please use WhatsApp instead.');
-
-      const artworkPaths: string[] = [];
-      for (const file of files) {
-        const path = `incoming/${requestKey}/${crypto.randomUUID()}.${fileExtensions[file.type]}`;
-        const { error: uploadError } = await supabase.storage
-          .from('tg-custom-artwork')
-          .upload(path, file, { contentType: file.type, upsert: false });
-        if (uploadError) throw new Error('We could not upload one of your files. Please try again.');
-        artworkPaths.push(path);
-      }
-
       const response = await fetch('/api/custom-requests', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          requestKey,
-          customerName: customerName.trim(),
-          customerPhone: customerPhone.trim(),
-          customerEmail: customerEmail.trim(),
-          productId: selectedSample?.id ?? '',
-          productLabel: itemLabel,
-          itemDescription: productDescription.trim(),
-          designType: design,
-          artworkDescription: artworkDescription.trim(),
-          designPlacement: placement,
-          quantity: Number(quantity),
-          occasion,
-          requestedDate,
-          extraNotes: notes.trim(),
-          artworkPaths,
-          websiteUrl: '',
-        }),
+        body: payload,
       });
 
-      const result = await response.json() as { ok?: boolean; requestCode?: string; error?: string };
+      const result = await response.json() as {
+        ok?: boolean;
+        requestCode?: string;
+        error?: string;
+      };
+
       if (!response.ok || !result.ok || !result.requestCode) {
         throw new Error(result.error || 'We could not save your request. Please try again.');
       }
 
       setRequestCode(result.requestCode);
-      setFileNames('');
+      formElement.reset();
+      setProduct('Water bottle');
+      setSampleProductId(initialProductId ?? '');
+      setProductDescription('');
+      setDesign('Photograph');
+      setArtworkDescription('');
+      setPlacement('One side');
+      setQuantity('1');
+      setOccasion('Birthday');
+      setCustomerName('');
+      setCustomerPhone('');
+      setCustomerEmail('');
+      setRequestedDate('');
       setNotes('');
-      if (fileInput) fileInput.value = '';
+      setArtworkConsent(false);
+      setFileNames('');
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : 'Something went wrong. Please try again.');
     } finally {
@@ -200,6 +200,8 @@ export default function CustomOrderForm({
         </div>
       ) : (
         <form className="custom-order-form" onSubmit={handleSubmit}>
+          <input className="custom-order-honeypot" type="text" name="websiteUrl"
+            tabIndex={-1} autoComplete="off" aria-hidden="true" />
           <div className="custom-order-form-topline">
             <span>YOUR PERSONALISATION REQUEST</span>
             <span>01 — 03</span>
@@ -311,7 +313,8 @@ export default function CustomOrderForm({
           <label className="custom-order-field">
             <span>When would you ideally need it? <em>Optional</em></span>
             <input type="date" name="requestedDate" value={requestedDate}
-              onChange={(event) => setRequestedDate(event.target.value)} min={new Date().toISOString().slice(0, 10)} />
+              onChange={(event) => setRequestedDate(event.target.value)}
+              min={new Date().toISOString().slice(0, 10)} />
           </label>
 
           <label className="custom-order-field custom-order-upload">
