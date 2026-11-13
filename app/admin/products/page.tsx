@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { requireStoreOwner } from '@/lib/store/owner';
 import { deleteProductAction, toggleProductAction } from './actions';
 
@@ -55,7 +56,8 @@ export default async function AdminProductsPage({
             <article className="admin-product-card" key={product.id}>
               <div className="admin-product-card-image">
                 {images[0]?.image_url
-                  ? <img src={images[0].image_url} alt={images[0].alt_text || product.name} />
+                  ? <Image src={images[0].image_url} alt={images[0].alt_text || product.name}
+                    width={600} height={450} unoptimized />
                   : <span>NO IMAGE YET</span>}
               </div>
               <div className="admin-product-card-body">
