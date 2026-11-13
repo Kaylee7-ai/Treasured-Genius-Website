@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import type { ReactNode } from 'react';
 import './globals.css';
+import './store.css';
 import SmoothScroll from '@/components/SmoothScroll';
 
 
@@ -28,5 +30,5 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: '#07120D', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return <html lang="en"><body><SmoothScroll />{children}</body></html>;
+  return <html lang="en"><body><SmoothScroll />{children}<Analytics /></body></html>;
 }
