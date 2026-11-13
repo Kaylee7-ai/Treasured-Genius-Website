@@ -1,7 +1,7 @@
 import Hero3D from '@/components/Hero3D';
 import Navigation from '@/components/Navigation';
 import CustomOrderForm from '@/components/CustomOrderForm';
-import { About, Collections, CraftPrinting, Experience, FeaturedProducts, FinalCTA, Reviews, Visit } from '@/components/sections/Sections';
+import { About, Collections, CraftPrinting, Experience, FeaturedProducts, FinalCTA, RealWorkGallery, Reviews, Visit } from '@/components/sections/Sections';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 type SampleProduct = { id: string; name: string; slug: string };
@@ -83,6 +83,7 @@ export default async function Home({
       <About />
       <Collections />
       <FeaturedProducts />
+      <RealWorkGallery />
       <CraftPrinting serviceInformation={businessSettings.serviceInformation} />
       <CustomOrderForm
         sampleProducts={sampleProducts}
