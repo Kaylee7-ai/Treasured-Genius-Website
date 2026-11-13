@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import { getOwnerEmails } from '@/lib/store/owner';
+
+
+const getOwnerEmails = () => (process.env.STORE_OWNER_EMAILS ?? '').split(',').map((value) => value.trim().toLowerCase()).filter(Boolean);
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
