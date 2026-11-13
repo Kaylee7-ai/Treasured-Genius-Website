@@ -129,7 +129,7 @@ export function RealWorkGallery() {
     </div>
     <div className="real-work-photo-wrap">
       <Image src="/images/treasured-genius-real-work.jpg" alt="A collage of Treasured Genius personalised gift sets, NKJV Bibles, vacuum flasks, engraved chopping boards and wooden keepsakes" width={300} height={450} sizes="(max-width: 800px) 90vw, 42vw" className="real-work-photo" priority />
-      <span className="real-work-photo-caption">A SELECTION OF PERSONALised WORK FROM TREASURED GENIUS</span>
+      <span className="real-work-photo-caption">A SELECTION OF PERSONALISED WORK FROM TREASURED GENIUS</span>
     </div>
   </section>;
 }
