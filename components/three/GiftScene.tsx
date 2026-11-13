@@ -178,9 +178,9 @@ function GlossFloor() {
         const radius = Math.min(1, Math.sqrt(dx * dx + dy * dy));
         const glow = Math.pow(Math.max(0, 1 - radius), 1.7);
         const i = (y * size + x) * 4;
-        data[i] = Math.round(16 + glow * 35);
-        data[i + 1] = Math.round(8 + glow * 7);
-        data[i + 2] = Math.round(9 + glow * 15);
+        data[i] = Math.round(7 + glow * 4);
+        data[i + 1] = Math.round(18 + glow * 12);
+        data[i + 2] = Math.round(13 + glow * 8);
         data[i + 3] = 255;
       }
     }
@@ -192,7 +192,7 @@ function GlossFloor() {
   useEffect(() => () => texture.dispose(), [texture]);
   return <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.285, 0]} receiveShadow>
     <planeGeometry args={[30, 30]} />
-    <meshPhysicalMaterial map={texture} color="#1A0E11" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
+    <meshPhysicalMaterial map={texture} color="#0E1F17" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
   </mesh>;
 }
 
@@ -399,16 +399,15 @@ function StudioEnvironment() {
 
 function Scene({ reducedMotion }: { reducedMotion: boolean }) {
   return <>
-    <color attach="background" args={['#100809']} />
-    <fog attach="fog" args={['#100809', 8, 18]} />
+    <color attach="background" args={['#07120D']} />
+    <fog attach="fog" args={['#07120D', 8, 18]} />
     <StudioEnvironment />
     <ambientLight intensity={0.22} color="#BDB3A6" />
-    <pointLight position={[0, 1.8, -2.8]} intensity={1.1} distance={8} color="#6B1226" />
     <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#EEDDB8" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} />
-    <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={8} color="#A88B57" />
+    <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={5} color="#F6F1E4" />
     <GiftSculpture reducedMotion={reducedMotion} />
     <GlossFloor />
-    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#080405" />
+    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#020805" />
     {!reducedMotion && <EffectComposer multisampling={4}>
       <Bloom intensity={0.045} luminanceThreshold={1.12} luminanceSmoothing={0.08} />
       <Vignette eskil={false} offset={0.24} darkness={0.4} />
