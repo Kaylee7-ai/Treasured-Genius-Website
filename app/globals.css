@@ -111,3 +111,9 @@ html,body{background:var(--background);color:var(--text)}
 .custom-order-privacy{margin:20px 0 0;color:var(--muted);font-size:9px;line-height:1.8}
 @media(max-width:800px){.custom-order-heading{grid-template-columns:1fr;gap:24px}.custom-order-grid-three{grid-template-columns:1fr 1fr}.custom-order-grid-three .custom-order-field:last-child{grid-column:1/-1}}
 @media(max-width:560px){.custom-order-heading{margin-bottom:34px}.custom-order-heading h2{font-size:clamp(3.6rem,16vw,5.2rem)}.custom-order-form{padding:22px 18px}.custom-order-grid,.custom-order-grid-three{grid-template-columns:1fr;gap:18px}.custom-order-grid-three .custom-order-field:last-child{grid-column:auto}.custom-order-submit-row{align-items:stretch;flex-direction:column;gap:20px}.custom-order-submit{width:100%;white-space:normal}.custom-order-form-topline{font-size:7px}}
+
+
+/* Recovered Treasured Genius product photography */
+.real-work-section{display:grid;grid-template-columns:1fr minmax(280px,.9fr);gap:clamp(32px,7vw,100px);align-items:center;background:var(--background)}
+.real-work-copy{max-width:620px}.real-work-copy h2{font:400 clamp(3.2rem,6vw,6rem)/.95 var(--font-display),serif;letter-spacing:-.045em;margin:22px 0 28px}.real-work-copy h2 em{color:var(--gold);font-style:italic}.real-work-copy>p:not(.eyebrow){max-width:510px;color:var(--muted);font-size:14px;line-height:1.9;margin-bottom:28px}.real-work-photo-wrap{position:relative;max-width:460px;margin-inline:auto;border:1px solid color-mix(in srgb,var(--gold) 40%,transparent);padding:10px;background:var(--surface);box-shadow:0 30px 90px rgba(0,0,0,.28)}.real-work-photo{display:block;width:100%;height:auto;object-fit:cover}.real-work-photo-caption{display:block;padding:12px 4px 3px;text-align:center;color:var(--gold);font-size:8px;letter-spacing:.18em}
+@media(max-width:800px){.real-work-section{grid-template-columns:1fr;gap:30px}.real-work-copy{max-width:100%}.real-work-photo-wrap{width:min(100%,420px)}}
