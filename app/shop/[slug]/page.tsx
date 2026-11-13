@@ -13,7 +13,7 @@ export default async function ProductPage({
   if (!supabase) notFound();
 
   const { data: product, error } = await supabase.from('products')
-    .select('id,name,slug,description,short_description,price_mode,price_ghs,availability,personalisation_options,product_images(image_url,alt_text,sort_order),categories(name)')
+    .select('id,name,slug,description,short_description,price_mode,price_ghs,availability,personalisation_options,product_images(id,image_url,alt_text,sort_order),categories(name)')
     .eq('slug', slug).eq('is_active', true).maybeSingle();
 
   if (error || !product) notFound();
@@ -51,7 +51,7 @@ export default async function ProductPage({
           {!!product.personalisation_options?.length && (
             <div className="product-personalisation">
               <strong>Personalisation options</strong>
-              <ul>{product.personalisation_options.map((option) => <li key={option}>{option}</li>)}</ul>
+              <ul>{product.personalisation_options.map((option: string) => <li key={option}>{option}</li>)}</ul>
             </div>
           )}
           <Link className="store-whatsapp" href={`/?item=${encodeURIComponent(product.slug)}#custom-order`}>
