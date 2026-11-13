@@ -307,3 +307,11 @@ grant select, insert, update, delete on public.settings to authenticated;
 grant select, update on public.custom_requests to authenticated;
 grant all on public.custom_requests to service_role;
 grant all on public.settings, public.categories, public.products, public.product_images to service_role;
+
+insert into public.categories (name, slug, description, sort_order)
+values
+  ('Custom Printing', 'custom-printing', 'Custom print and design projects.', 1),
+  ('Personalised Gifts', 'personalised-gifts', 'Gift ideas that can be customised.', 2),
+  ('Crafts & Keepsakes', 'crafts-keepsakes', 'Creative craft projects and keepsakes.', 3),
+  ('Business Branding', 'business-branding', 'Printed materials and designs for businesses.', 4)
+on conflict (slug) do nothing;
