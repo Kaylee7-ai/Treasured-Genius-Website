@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
@@ -32,8 +33,8 @@ export default async function ProductPage({
         <div className="product-gallery">
           {images.length ? images.map((image, index) => (
             <div className="product-gallery-image" key={image.id}>
-              <img src={image.image_url} alt={image.alt_text || product.name}
-                loading={index === 0 ? 'eager' : 'lazy'} />
+              <Image src={image.image_url} alt={image.alt_text || product.name}
+                width={900} height={760} unoptimized priority={index === 0} loading={index === 0 ? 'eager' : 'lazy'} />
             </div>
           )) : <div className="product-image-empty">TREASURED GENIUS</div>}
         </div>
