@@ -1,6 +1,6 @@
 {
   "name": "treasured-genius",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -21,7 +21,10 @@
     "postprocessing": "6.36.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "three": "0.172.0"
+    "three": "0.172.0",
+    "@supabase/ssr": "0.6.1",
+    "@supabase/supabase-js": "2.57.4",
+    "@vercel/analytics": "2.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.2.0",
