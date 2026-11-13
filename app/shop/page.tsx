@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export default async function ShopPage({
@@ -83,8 +84,8 @@ export default async function ShopPage({
               <Link href={`/shop/${product.slug}`} className="product-card" key={product.id}>
                 <div className="product-card-image">
                   {images[0]?.image_url
-                    ? <img src={images[0].image_url} alt={images[0].alt_text || product.name}
-                        loading="lazy" />
+                    ? <Image src={images[0].image_url} alt={images[0].alt_text || product.name}
+                        width={900} height={760} unoptimized loading="lazy" />
                     : <div className="product-image-empty">TREASURED GENIUS</div>}
                   {product.is_featured && <span className="featured-tag">FEATURED</span>}
                 </div>
