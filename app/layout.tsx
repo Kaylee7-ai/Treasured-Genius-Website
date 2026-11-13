@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import type { ReactNode } from 'react';
 import './globals.css';
+import './store.css';
 import SmoothScroll from '@/components/SmoothScroll';
 
 
