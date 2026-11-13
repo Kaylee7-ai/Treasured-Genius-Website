@@ -2,7 +2,7 @@ create extension if not exists pgcrypto;
 
 create schema if not exists private;
 revoke all on schema private from public, anon, authenticated;
-grant usage on schema private to authenticated;
+grant usage on schema private to anon, authenticated;
 
 create table if not exists public.settings (
   key text primary key,
@@ -123,7 +123,7 @@ as $$
 $$;
 
 revoke all on function private.is_store_owner() from public, anon;
-grant execute on function private.is_store_owner() to authenticated;
+grant execute on function private.is_store_owner() to anon, authenticated;
 
 alter table public.settings enable row level security;
 alter table public.categories enable row level security;
