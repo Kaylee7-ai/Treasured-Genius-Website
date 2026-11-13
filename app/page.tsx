@@ -1,4 +1,5 @@
 import Hero3D from '@/components/Hero3D';
+import CustomOrderForm from '@/components/CustomOrderForm';
 import Navigation from '@/components/Navigation';
 import { About, Collections, Experience, FeaturedProducts, FinalCTA, Reviews, Visit } from '@/components/sections/Sections';
 
@@ -17,7 +18,7 @@ export default function Home() {
         <Hero3D />
         <div className="hero-bottomline"><span>THOUGHTFULLY CHOSEN</span><span>BEAUTIFULLY PRESENTED</span><span>ALWAYS MEANINGFUL</span></div>
       </section>
-      <About /><Collections /><FeaturedProducts /><Experience /><Reviews /><Visit /><FinalCTA />
+      <About /><Collections /><FeaturedProducts /><CustomOrderForm /><Experience /><Reviews /><Visit /><FinalCTA />
       <footer className="site-footer">
         <a href="#top" className="footer-brand">TREASURED <i>GENIUS</i></a>
         <span>THE ART OF GIVING</span>

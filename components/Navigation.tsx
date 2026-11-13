@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const links = [['The Atelier', '#about'], ['Collections', '#collections'], ['Our Promise', '#experience'], ['Visit', '#visit']];
+const links = [['The Atelier', '#about'], ['Collections', '#collections'], ['Customise', '#custom-order'], ['Our Promise', '#experience'], ['Visit', '#visit']];
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
