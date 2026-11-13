@@ -254,14 +254,8 @@ comment on column public.custom_requests.artwork_paths is
   'Object paths inside the private tg-custom-artwork bucket; never expose these as public URLs.';
 
 
-drop policy if exists "TG public uploads private customer artwork" on storage.objects;
-create policy "TG public uploads private customer artwork"
-  on storage.objects for insert to anon, authenticated
-  with check (
-    bucket_id = 'tg-custom-artwork'
-    and name like 'incoming/%'
-    and name !~ '(^|/)\\.\\.?(/|$)'
-  );
+-- Customer files are written by a server-only service key after validation and rate limiting.
+-- No public upload policy is granted on the private artwork bucket.
 
 
 create table if not exists private.custom_request_rate_limits (
@@ -286,7 +280,7 @@ begin
     return false;
   end if;
 
-  perform pg_advisory_xact_lock(hashtext(p_ip_hash));
+  perform pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtext(p_ip_hash));
   delete from private.custom_request_rate_limits
     where created_at < now() - interval '2 hours';
 
@@ -306,3 +300,10 @@ $$;
 
 revoke all on function public.check_custom_request_rate_limit(text) from public, anon, authenticated;
 grant execute on function public.check_custom_request_rate_limit(text) to service_role;
+
+grant select on public.categories, public.products, public.product_images to anon, authenticated;
+grant insert, update, delete on public.categories, public.products, public.product_images to authenticated;
+grant select, insert, update, delete on public.settings to authenticated;
+grant select, update on public.custom_requests to authenticated;
+grant all on public.custom_requests to service_role;
+grant all on public.settings, public.categories, public.products, public.product_images to service_role;
