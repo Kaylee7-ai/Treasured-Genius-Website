@@ -1,9 +1,37 @@
 import Hero3D from '@/components/Hero3D';
-import CustomOrderForm from '@/components/CustomOrderForm';
 import Navigation from '@/components/Navigation';
+import CustomOrderForm from '@/components/CustomOrderForm';
 import { About, Collections, Experience, FeaturedProducts, FinalCTA, Reviews, Visit } from '@/components/sections/Sections';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 
-export default function Home() {
+type SampleProduct = { id: string; name: string; slug: string };
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ item?: string }>;
+}) {
+  const params = await searchParams;
+  const supabase = await createSupabaseServerClient();
+  let sampleProducts: SampleProduct[] = [];
+
+  if (supabase) {
+    const { data } = await supabase.from('products')
+      .select('id,name,slug')
+      .eq('is_active', true)
+      .order('sort_order')
+      .order('name');
+    sampleProducts = data ?? [];
+  }
+
+  const initialProductId = sampleProducts.find((product) => product.slug === params.item)?.id;
+  const onlineSubmissionEnabled = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL
+    && (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+      || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+    && (process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY)
+  );
+
   return (
     <main id="top">
       <Navigation />
@@ -18,7 +46,18 @@ export default function Home() {
         <Hero3D />
         <div className="hero-bottomline"><span>THOUGHTFULLY CHOSEN</span><span>BEAUTIFULLY PRESENTED</span><span>ALWAYS MEANINGFUL</span></div>
       </section>
-      <About /><Collections /><FeaturedProducts /><CustomOrderForm /><Experience /><Reviews /><Visit /><FinalCTA />
+      <About />
+      <Collections />
+      <FeaturedProducts />
+      <CustomOrderForm
+        sampleProducts={sampleProducts}
+        initialProductId={initialProductId}
+        onlineSubmissionEnabled={onlineSubmissionEnabled}
+      />
+      <Experience />
+      <Reviews />
+      <Visit />
+      <FinalCTA />
       <footer className="site-footer">
         <a href="#top" className="footer-brand">TREASURED <i>GENIUS</i></a>
         <span>THE ART OF GIVING</span>
