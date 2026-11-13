@@ -262,3 +262,47 @@ create policy "TG public uploads private customer artwork"
     and name like 'incoming/%'
     and name !~ '(^|/)\\.\\.?(/|$)'
   );
+
+
+create table if not exists private.custom_request_rate_limits (
+  id bigint generated always as identity primary key,
+  ip_hash text not null,
+  created_at timestamptz not null default now()
+);
+create index if not exists custom_request_rate_limits_ip_time_idx
+  on private.custom_request_rate_limits (ip_hash, created_at desc);
+revoke all on private.custom_request_rate_limits from public, anon, authenticated;
+
+create or replace function public.check_custom_request_rate_limit(p_ip_hash text)
+returns boolean
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  attempt_count integer;
+begin
+  if p_ip_hash is null or p_ip_hash !~ '^[a-f0-9]{64}$' then
+    return false;
+  end if;
+
+  perform pg_advisory_xact_lock(hashtext(p_ip_hash));
+  delete from private.custom_request_rate_limits
+    where created_at < now() - interval '2 hours';
+
+  select count(*)::integer into attempt_count
+    from private.custom_request_rate_limits
+    where ip_hash = p_ip_hash
+      and created_at > now() - interval '1 hour';
+
+  if attempt_count >= 5 then
+    return false;
+  end if;
+
+  insert into private.custom_request_rate_limits (ip_hash) values (p_ip_hash);
+  return true;
+end;
+$$;
+
+revoke all on function public.check_custom_request_rate_limit(text) from public, anon, authenticated;
+grant execute on function public.check_custom_request_rate_limit(text) to service_role;
