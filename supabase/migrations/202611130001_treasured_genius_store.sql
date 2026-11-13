@@ -252,3 +252,13 @@ comment on table public.custom_requests is
   'Private custom-gift enquiries submitted by customers. Only authorised store owners can read or update rows.';
 comment on column public.custom_requests.artwork_paths is
   'Object paths inside the private tg-custom-artwork bucket; never expose these as public URLs.';
+
+
+drop policy if exists "TG public uploads private customer artwork" on storage.objects;
+create policy "TG public uploads private customer artwork"
+  on storage.objects for insert to anon, authenticated
+  with check (
+    bucket_id = 'tg-custom-artwork'
+    and name like 'incoming/%'
+    and name !~ '(^|/)\\.\\.?(/|$)'
+  );
