@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Treasured Genius</title>
+  <meta name="description" content="The story behind Treasured Genius. We help people create personalized gifts that feel meaningful, warm, and truly special." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .about-hero{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;margin-bottom:5rem}
+    @media(max-width:850px){.about-hero{grid-template-columns:1fr;gap:2.5rem}}
+    .about-hero-image{border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-lg);height:420px;position:relative}
+    .about-hero-image img{width:100%;height:100%;object-fit:cover}
+    .about-hero-text h1{margin-bottom:1.25rem}
+    .about-hero-text .lead{font-size:1.2rem;color:var(--soft-brown);line-height:1.7;margin-bottom:1.5rem}
+    .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
+    @media(max-width:768px){.values-grid{grid-template-columns:1fr}}
+    .value-card{background:var(--cream);border-radius:var(--radius-lg);padding:2rem;border:1px solid rgba(201,162,39,.12);text-align:center;transition:var(--transition)}
+    .value-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md),var(--glow-gold)}
+    .value-icon{width:64px;height:64px;margin:0 auto 1.25rem;background:linear-gradient(135deg,rgba(201,162,39,.15),rgba(160,82,45,.15));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.75rem}
+    .value-card h3{margin-bottom:.6rem;font-size:1.2rem}
+    .value-card p{color:var(--soft-brown);font-size:.95rem;line-height:1.6}
+    .story-section{background:linear-gradient(135deg,var(--espresso),#5C4033);border-radius:var(--radius-xl);padding:4rem;color:white;margin:4rem 0;position:relative;overflow:hidden}
+    .story-section:before{content:"";position:absolute;top:-30%;right:-10%;width:350px;height:350px;background:radial-gradient(circle,rgba(201,162,39,.2),transparent 70%);border-radius:50%}
+    .story-section h2{color:white;margin-bottom:1.25rem;position:relative}
+    .story-section p{color:rgba(255,255,255,.88);font-size:1.1rem;line-height:1.75;max-width:680px;position:relative}
+    .story-section .accent-text{color:var(--gold-light)}
+    .team-note{text-align:center;max-width:640px;margin:0 auto}
+    .team-note p{color:var(--soft-brown);font-size:1.1rem;line-height:1.7;margin-bottom:2rem}
+    @media(max-width:600px){.story-section{padding:2rem 1.4rem}}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><nav class="nav">
+<a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a>
+<ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="customize.html">Design Your Gift</a></li><li><a href="occasions.html">Occasions</a></li><li><a href="about.html" class="active">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+<div class="nav-actions"><a href="cart.html" class="cart-btn" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg><span class="cart-count" id="cartCount">0</span></a><button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<div class="page-header"><div class="container"><h1>Our Story</h1><p>Why we started Treasured Genius — and what we believe about giving.</p></div></div>
+<section class="section-sm"><div class="container"><div class="about-hero">
+<div class="about-hero-text"><h1>Gifts should feel like they were made just for someone.</h1>
+<p class="lead">We believe the best presents aren’t the most expensive ones — they’re the ones that carry a piece of the giver’s thoughtfulness. A name. A date. A quiet inside joke. A color that means something.</p>
+<p class="lead">Treasured Genius exists to make that kind of personalization simple, beautiful, and joyful.</p>
+<a href="customize.html" class="btn btn-primary">Start Designing</a></div>
+<div class="about-hero-image"><img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80" alt="Thoughtfully prepared personalized gift box" loading="lazy"></div>
+</div></div></section>
+<section class="section" style="background:linear-gradient(180deg,transparent,rgba(232,196,168,.2),transparent)"><div class="container">
+<h2 class="section-title">What We Stand For</h2><p class="section-subtitle">Three simple ideas that guide everything we create.</p>
+<div class="values-grid">
+<div class="value-card"><div class="value-icon">💛</div><h3>Meaning Over Mass</h3><p>We focus on gifts that feel intentional. Every product is designed to carry a name, a message, or a memory — not just a logo.</p></div>
+<div class="value-card"><div class="value-icon">✨</div><h3>Warm &amp; Playful</h3><p>Personalization shouldn’t feel complicated or cold. We keep the experience friendly, creative, and a little bit magical.</p></div>
+<div class="value-card"><div class="value-icon">🛠️</div><h3>Crafted with Care</h3><p>From the materials we choose to the way each item is finished, we treat every order as something that will be opened with anticipation.</p></div>
+</div></div></section>
+<section class="section"><div class="container"><div class="story-section">
+<p class="accent-text" style="margin-bottom:.75rem;font-size:1.3rem">How it started</p><h2>A simple frustration turned into a studio.</h2>
+<p>We were tired of scrolling through endless generic gift options that felt empty. The same mugs. The same candles. Nothing that said “I thought about you specifically.”</p>
+<p style="margin-top:1.25rem">So we built Treasured Genius — a place where designing a personal gift feels as natural as writing a note. Whether you start with a product or answer a few questions about the person and the occasion, our goal is the same: help you create something that feels like it could only have come from you.</p>
+</div></div></section>
+<section class="section"><div class="container"><div class="team-note">
+<h2 class="section-title">Made for people who care about the details</h2>
+<p>We’re a small creative studio that believes giving is one of the most human things we do. Every time someone receives a gift that was clearly designed with them in mind, a little more warmth enters the world.</p>
+<p>Thank you for letting us be part of those moments.</p>
+<div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem"><a href="customize.html" class="btn btn-primary">Design Your Gift</a><a href="shop.html" class="btn btn-secondary">Browse the Collection</a></div>
+</div></div></section>
+<footer class="footer"><div class="container"><div class="footer-grid">
+<div class="footer-brand"><a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a><p>We help you turn ordinary objects into meaningful gifts. Designed with heart, made with care.</p></div>
+<div class="footer-links"><h4>Explore</h4><a href="shop.html">Shop All</a><a href="customize.html">Design Your Gift</a><a href="occasions.html">Occasions</a><a href="about.html">Our Story</a></div>
+<div class="footer-links"><h4>Help</h4><a href="contact.html">Contact Us</a><a href="contact.html#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a></div>
+<div class="footer-links"><h4>Connect</h4><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a><a href="mailto:hello@treasuredgenius.com">hello@treasuredgenius.com</a></div>
+</div><div class="footer-bottom"><p>© 2026 Treasured Genius. Made with love for meaningful gifting.</p><p>Privacy · Terms</p></div></div></footer>
+<script src="js/main.js"></script>
+</body></html>
