@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Treasured Genius</title>
+  <meta name="description" content="Complete your personalized gift order." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .checkout-layout{display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:start}
+    @media(max-width:900px){.checkout-layout{grid-template-columns:1fr}}
+    .checkout-form-section,.order-summary{background:var(--cream);border:1px solid rgba(201,162,39,.15);border-radius:var(--radius-xl);padding:2rem;margin-bottom:1.75rem}
+    .checkout-form-section h2{font-size:1.25rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem}
+    .checkout-form-section h2 span{width:28px;height:28px;background:var(--gold);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:600px){.form-row{grid-template-columns:1fr}}
+    .form-group{margin-bottom:1.15rem}
+    .form-group label{display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:var(--espresso)}
+    .form-group input,.form-group select{width:100%;padding:.85rem 1.1rem;background:white;border:1.5px solid var(--peach);border-radius:var(--radius-md);color:var(--chocolate)}
+    .form-group input:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.2)}
+    .order-summary{position:sticky;top:100px;box-shadow:var(--shadow-md)}
+    .order-summary h2{font-size:1.3rem;margin-bottom:1.5rem}
+    .summary-item{display:flex;gap:1rem;margin-bottom:1.25rem;padding-bottom:1.25rem;border-bottom:1px solid rgba(201,162,39,.12)}
+    .summary-item-img{width:70px;height:70px;border-radius:var(--radius-sm);overflow:hidden;background:var(--peach);flex-shrink:0}
+    .summary-item-img img{width:100%;height:100%;object-fit:cover}
+    .summary-item-info{flex:1;min-width:0}.summary-item-info h4{font-size:.95rem;margin-bottom:.2rem}
+    .summary-item-info p{font-size:.85rem;color:var(--soft-brown)}
+    .summary-item-price{font-weight:600;font-size:.95rem;white-space:nowrap}
+    .summary-totals{margin-top:1.5rem;padding-top:1.25rem;border-top:1.5px solid rgba(201,162,39,.2)}
+    .summary-row{display:flex;justify-content:space-between;margin-bottom:.7rem;font-size:.95rem}
+    .summary-row.total{font-size:1.3rem;font-weight:700;font-family:var(--font-display);color:var(--espresso);margin-top:.75rem}
+    .success-state{text-align:center;padding:4rem 1rem;max-width:520px;margin:0 auto}
+    .success-icon{width:90px;height:90px;background:linear-gradient(135deg,var(--gold),var(--cinnamon));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:2.5rem;color:white;box-shadow:var(--glow-gold-strong)}
+    .success-state h1{margin-bottom:1rem}.success-state p{color:var(--soft-brown);font-size:1.1rem;margin-bottom:2rem}
+    .order-number{background:var(--cream);display:inline-block;padding:.6rem 1.4rem;border-radius:var(--radius-full);font-weight:600;color:var(--cinnamon);margin-bottom:2rem;border:1px solid rgba(201,162,39,.2)}
+    .demo-notice{padding:1rem;border-radius:var(--radius-md);background:rgba(201,162,39,.1);color:var(--soft-brown);font-size:.92rem}
+  </style>
+</head>
+<body>
+  <header class="header" id="header"><div class="container"><nav class="nav">
+    <a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="customize.html">Design Your Gift</a></li><li><a href="occasions.html">Occasions</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions"><a href="cart.html" class="cart-btn" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg><span class="cart-count" id="cartCount">0</span></a><button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+  </nav></div></header>
+
+  <div id="checkoutView">
+    <div class="page-header"><div class="container"><h1>Checkout</h1><p>You’re almost there. Complete your details to finish the order.</p></div></div>
+    <section class="section-sm"><div class="container"><div class="checkout-layout">
+      <div><form id="checkoutForm">
+        <div class="checkout-form-section"><h2><span>1</span> Contact Information</h2>
+          <div class="form-group"><label for="email">Email address</label><input type="email" id="email" required autocomplete="email" placeholder="you@example.com" /></div>
+          <div class="form-group"><label for="phone">Phone (optional)</label><input type="tel" id="phone" autocomplete="tel" placeholder="Phone number" /></div>
+        </div>
+        <div class="checkout-form-section"><h2><span>2</span> Shipping Address</h2>
+          <div class="form-row"><div class="form-group"><label for="firstName">First name</label><input type="text" id="firstName" required autocomplete="given-name" /></div><div class="form-group"><label for="lastName">Last name</label><input type="text" id="lastName" required autocomplete="family-name" /></div></div>
+          <div class="form-group"><label for="address">Address</label><input type="text" id="address" required autocomplete="street-address" placeholder="Street address" /></div>
+          <div class="form-group"><label for="address2">Apartment, suite, etc. (optional)</label><input type="text" id="address2" /></div>
+          <div class="form-row"><div class="form-group"><label for="city">City</label><input type="text" id="city" required autocomplete="address-level2" /></div><div class="form-group"><label for="state">State / Province / Region</label><input type="text" id="state" required autocomplete="address-level1" /></div></div>
+          <div class="form-row"><div class="form-group"><label for="zip">ZIP / Postal code</label><input type="text" id="zip" required autocomplete="postal-code" /></div><div class="form-group"><label for="country">Country</label><select id="country" required autocomplete="country-name"><option value="GH">Ghana</option><option value="US">United States</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="Other">Other</option></select></div></div>
+        </div>
+        <div class="checkout-form-section"><h2><span>3</span> Payment</h2>
+          <p class="demo-notice">Demo checkout only. No payment will be taken. Do not enter or submit real card details. A secure payment provider must be connected before this shop can accept payments.</p>
+          <div class="form-group" style="margin-top:1.2rem"><label for="paymentMethod">Demo payment method</label><select id="paymentMethod" required><option value="demo">Demo — no payment processed</option></select></div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%" id="placeOrderBtn">Place Demo Order — $<span id="payAmount">0.00</span></button>
+      </form></div>
+      <aside class="order-summary"><h2>Order Summary</h2><div id="summaryItems"></div><div class="summary-totals">
+        <div class="summary-row"><span>Subtotal</span><span id="summarySubtotal">$0.00</span></div>
+        <div class="summary-row"><span>Shipping</span><span id="summaryShipping">$5.00</span></div>
+        <div class="summary-row total"><span>Total</span><span id="summaryTotal">$0.00</span></div>
+      </div></aside>
+    </div></div></section>
+  </div>
+
+  <div id="successView" style="display:none"><section class="section"><div class="container"><div class="success-state">
+    <div class="success-icon">✓</div><h1>Thank you for your order!</h1>
+    <p>Your demo order has been recorded on this page only. No payment was collected and no confirmation email was sent.</p>
+    <div class="order-number" id="orderNumber">Order #TG-000000</div>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap"><a href="index.html" class="btn btn-primary">Back to Home</a><a href="shop.html" class="btn btn-secondary">Continue Shopping</a></div>
+  </div></div></section></div>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a><p>We help you turn ordinary objects into meaningful gifts. Designed with heart, made with care.</p></div>
+    <div class="footer-links"><h4>Explore</h4><a href="shop.html">Shop All</a><a href="customize.html">Design Your Gift</a><a href="occasions.html">Occasions</a><a href="about.html">Our Story</a></div>
+    <div class="footer-links"><h4>Help</h4><a href="contact.html">Contact Us</a><a href="contact.html#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a></div>
+    <div class="footer-links"><h4>Connect</h4><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a><a href="mailto:hello@treasuredgenius.com">hello@treasuredgenius.com</a></div>
+  </div><div class="footer-bottom"><p>© 2026 Treasured Genius. Made with love for meaningful gifting.</p><p>Privacy · Terms</p></div></div></footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const SHIPPING_COST = 5.00;
+    const FREE_SHIPPING_THRESHOLD = 75;
+
+    function renderSummary() {
+      const cart = window.TGCart.getCart();
+      if (!Array.isArray(cart) || cart.length === 0) {
+        window.location.href = 'cart.html';
+        return;
+      }
+      const summaryItems = document.getElementById('summaryItems');
+      summaryItems.replaceChildren();
+      cart.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'summary-item';
+        const imageWrap = document.createElement('div');
+        imageWrap.className = 'summary-item-img';
+        const img = document.createElement('img');
+        img.src = item.image || 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&q=80';
+        img.alt = item.name || 'Gift';
+        imageWrap.appendChild(img);
+        const info = document.createElement('div');
+        info.className = 'summary-item-info';
+        const title = document.createElement('h4');
+        title.textContent = item.name || 'Personalized gift';
+        const qty = document.createElement('p');
+        qty.textContent = 'Qty: ' + (item.quantity || 1);
+        info.append(title, qty);
+        const price = document.createElement('div');
+        price.className = 'summary-item-price';
+        price.textContent = '$' + (Number(item.price || 0) * (Number(item.quantity) || 1)).toFixed(2);
+        el.append(imageWrap, info, price);
+        summaryItems.appendChild(el);
+      });
+      const subtotal = Number(window.TGCart.getCartTotal()) || 0;
+      const shipping = subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+      const total = subtotal + shipping;
+      document.getElementById('summarySubtotal').textContent = '$' + subtotal.toFixed(2);
+      document.getElementById('summaryShipping').textContent = shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2);
+      document.getElementById('summaryTotal').textContent = '$' + total.toFixed(2);
+      document.getElementById('payAmount').textContent = total.toFixed(2);
+    }
+
+    document.getElementById('checkoutForm').addEventListener('submit', event => {
+      event.preventDefault();
+      if (!event.currentTarget.reportValidity()) return;
+      const button = document.getElementById('placeOrderBtn');
+      button.disabled = true;
+      button.textContent = 'Completing demo order…';
+      const orderNum = 'TG-' + Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('orderNumber').textContent = 'Demo Order #' + orderNum;
+      window.TGCart.clearCart();
+      document.getElementById('checkoutView').style.display = 'none';
+      document.getElementById('successView').style.display = 'block';
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+
+    renderSummary();
+  </script>
+</body>
+</html>
