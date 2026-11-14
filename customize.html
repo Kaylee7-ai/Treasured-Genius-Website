@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Your Gift — Treasured Genius</title>
+  <meta name="description" content="Create a personalized gift. Answer a few questions or customize a product with names, messages, colors and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .customize-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+    @media(max-width:900px){.customize-layout{grid-template-columns:1fr}}
+    .mode-switcher{display:flex;background:var(--cream);border-radius:var(--radius-full);padding:.35rem;margin-bottom:2.5rem;border:1px solid rgba(201,162,39,.2);max-width:480px}
+    .mode-btn{flex:1;padding:.75rem 1.25rem;border-radius:var(--radius-full);font-weight:600;font-size:.95rem;color:var(--soft-brown);transition:var(--transition);text-align:center}
+    .mode-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:white;box-shadow:var(--glow-gold)}
+    .preview-panel{background:var(--cream);border-radius:var(--radius-xl);padding:2rem;border:1px solid rgba(201,162,39,.15);position:sticky;top:100px;box-shadow:var(--shadow-md)}
+    .preview-image-wrap{border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1.5rem;background:var(--peach);aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative}
+    .preview-image-wrap img{width:100%;height:100%;object-fit:cover}
+    .preview-overlay-text{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);background:rgba(255,248,238,.95);padding:.6rem 1.4rem;border-radius:var(--radius-full);font-family:var(--font-display);font-size:1.3rem;font-weight:600;color:var(--espresso);box-shadow:var(--shadow-sm);max-width:90%;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .preview-details h3{margin-bottom:.5rem}
+    .preview-price{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--gold-dark);margin:.75rem 0 1.5rem}
+    .form-section{margin-bottom:2rem}
+    .form-section h3{font-size:1.15rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .form-section h3 span{width:28px;height:28px;background:var(--gold);color:white;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-family:var(--font-body);font-weight:700}
+    .form-group{margin-bottom:1.25rem}
+    .form-group label{display:block;font-weight:600;font-size:.9rem;margin-bottom:.4rem;color:var(--espresso)}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:.85rem 1.1rem;background:white;border:1.5px solid var(--peach);border-radius:var(--radius-md);color:var(--chocolate);transition:var(--transition)}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,39,.2)}
+    .form-group textarea{min-height:100px;resize:vertical}
+    .color-options{display:flex;gap:.75rem;flex-wrap:wrap}
+    .color-swatch{width:42px;height:42px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:var(--transition);box-shadow:var(--shadow-sm)}
+    .color-swatch:hover,.color-swatch.selected{border-color:var(--espresso);transform:scale(1.1)}
+    .quiz-progress{display:flex;gap:.5rem;margin-bottom:2rem}
+    .quiz-step-dot{flex:1;height:6px;background:var(--peach);border-radius:3px;transition:var(--transition)}
+    .quiz-step-dot.active{background:var(--gold)}.quiz-step-dot.completed{background:var(--cinnamon)}
+    .quiz-card{background:var(--cream);border-radius:var(--radius-xl);padding:2.5rem;border:1px solid rgba(201,162,39,.15);box-shadow:var(--shadow-md);max-width:640px;margin:0 auto}
+    .quiz-question{font-family:var(--font-display);font-size:1.6rem;margin-bottom:.5rem}
+    .quiz-hint{color:var(--soft-brown);margin-bottom:2rem}
+    .option-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1rem;margin-bottom:2rem}
+    .option-card{background:white;border:2px solid var(--peach);border-radius:var(--radius-md);padding:1.25rem 1rem;text-align:center;cursor:pointer;transition:var(--transition)}
+    .option-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:var(--shadow-sm)}
+    .option-card.selected{border-color:var(--gold);background:rgba(201,162,39,.08);box-shadow:var(--glow-gold)}
+    .option-card .icon{font-size:1.8rem;margin-bottom:.5rem}.option-card .label{font-weight:600;font-size:.95rem}
+    .quiz-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:1.5rem}
+    .summary-box{background:white;border-radius:var(--radius-md);padding:1.5rem;margin-top:1.5rem;border:1px solid var(--peach)}
+    .summary-box h4{margin-bottom:1rem;font-size:1rem}
+    .summary-item{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(201,162,39,.1);font-size:.95rem}
+    .summary-item:last-child{border-bottom:none}.summary-item span:first-child{color:var(--soft-brown)}.summary-item span:last-child{font-weight:600;color:var(--espresso)}
+    .mode-content{display:none}.mode-content.active{display:block}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><nav class="nav">
+  <a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="customize.html" class="active">Design Your Gift</a></li><li><a href="occasions.html">Occasions</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions"><a href="cart.html" class="cart-btn" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg><span class="cart-count" id="cartCount">0</span></a><button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<div class="page-header"><div class="container"><h1>Design Your Gift</h1><p>Make something personal. Choose a product or tell us what you have in mind.</p></div></div>
+<section class="section-sm"><div class="container">
+  <div class="mode-switcher"><button class="mode-btn active" data-mode="product" id="modeProduct">Customize a Product</button><button class="mode-btn" data-mode="quiz" id="modeQuiz">Design from Scratch</button></div>
+  <div class="mode-content active" id="productMode"><div class="customize-layout"><div>
+    <div class="form-section"><h3><span>1</span> Choose Product</h3><div class="form-group"><label for="productSelect">Product</label><select id="productSelect">
+      <option value="water-bottle">Custom Name Water Bottle — from $32</option><option value="gift-box">Keepsake Gift Box — from $48</option><option value="name-print">Custom Name Print — from $28</option><option value="mug">Personalized Mug — from $24</option><option value="tee">Custom Embroidered Tee — from $36</option><option value="candle">Personalized Candle — from $29</option><option value="keychain">Engraved Keychain — from $18</option><option value="photo-book">Custom Photo Book — from $54</option>
+    </select></div></div>
+    <div class="form-section"><h3><span>2</span> Personalize</h3>
+      <div class="form-group"><label for="customName">Name or Text to Feature</label><input type="text" id="customName" placeholder="e.g. Emma, The Johnsons, 2026" maxlength="24" /></div>
+      <div class="form-group"><label for="customMessage">Optional Message / Note</label><textarea id="customMessage" placeholder="A short message that will appear on the gift or card..."></textarea></div>
+      <div class="form-group"><label>Accent Color</label><div class="color-options" id="colorOptions">
+        <div class="color-swatch selected" data-color="#C9A227" style="background:#C9A227" title="Gold"></div><div class="color-swatch" data-color="#A0522D" style="background:#A0522D" title="Cinnamon"></div><div class="color-swatch" data-color="#3B2A1A" style="background:#3B2A1A" title="Chocolate"></div><div class="color-swatch" data-color="#2E5A4C" style="background:#2E5A4C" title="Forest"></div><div class="color-swatch" data-color="#5C6B8A" style="background:#5C6B8A" title="Slate"></div><div class="color-swatch" data-color="#C45C6A" style="background:#C45C6A" title="Rose"></div>
+      </div></div>
+      <div class="form-group"><label for="fontStyle">Font Style</label><select id="fontStyle"><option value="elegant">Elegant Serif</option><option value="modern">Modern Sans</option><option value="script">Handwritten Script</option><option value="bold">Bold &amp; Strong</option></select></div>
+    </div>
+    <div class="form-section"><h3><span>3</span> Extra Details</h3><div class="form-group"><label for="recipientName">Recipient’s Name (for packaging)</label><input type="text" id="recipientName" placeholder="Who is this gift for?" /></div><div class="form-group"><label for="occasionSelect">Occasion</label><select id="occasionSelect"><option value="">Select occasion (optional)</option><option value="birthday">Birthday</option><option value="wedding">Wedding</option><option value="anniversary">Anniversary</option><option value="corporate">Corporate</option><option value="new-baby">New Baby</option><option value="just-because">Just Because</option></select></div></div>
+    <button class="btn btn-primary btn-lg" id="addToCartBtn" style="width:100%">Add to Cart — $<span id="currentPrice">32</span></button>
+  </div>
+  <div class="preview-panel"><div class="preview-image-wrap"><img id="previewImage" src="https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&amp;q=80" alt="Product preview" /><div class="preview-overlay-text" id="previewText">Your Name</div></div><div class="preview-details"><h3 id="previewTitle">Custom Name Water Bottle</h3><p id="previewDesc" style="color:var(--soft-brown);font-size:.95rem">Premium stainless steel bottle with elegant name engraving.</p><div class="preview-price">$<span id="previewPrice">32</span></div><p style="font-size:.9rem;color:var(--soft-brown)">Live preview updates as you type. Final production may vary slightly.</p></div></div>
+  </div></div>
+  <div class="mode-content" id="quizMode"><div class="quiz-card"><div class="quiz-progress" id="quizProgress"><div class="quiz-step-dot active"></div><div class="quiz-step-dot"></div><div class="quiz-step-dot"></div><div class="quiz-step-dot"></div><div class="quiz-step-dot"></div></div><div id="quizContent"></div><div class="quiz-nav"><button class="btn btn-secondary" id="quizBack" style="visibility:hidden">Back</button><button class="btn btn-primary" id="quizNext">Continue</button></div></div></div>
+</div></section>
+<footer class="footer"><div class="container"><div class="footer-grid">
+  <div class="footer-brand"><a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a><p>We help you turn ordinary objects into meaningful gifts. Designed with heart, made with care.</p></div>
+  <div class="footer-links"><h4>Explore</h4><a href="shop.html">Shop All</a><a href="customize.html">Design Your Gift</a><a href="occasions.html">Occasions</a><a href="about.html">Our Story</a></div>
+  <div class="footer-links"><h4>Help</h4><a href="contact.html">Contact Us</a><a href="contact.html#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a></div>
+  <div class="footer-links"><h4>Connect</h4><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a><a href="mailto:hello@treasuredgenius.com">hello@treasuredgenius.com</a></div>
+</div><div class="footer-bottom"><p>© 2026 Treasured Genius. Made with love for meaningful gifting.</p><p>Privacy · Terms</p></div></div></footer>
+<script src="js/main.js"></script>
+<script>
+const productData={
+'water-bottle':{name:'Custom Name Water Bottle',price:32,image:'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&q=80',desc:'Premium stainless steel bottle with elegant name engraving.'},
+'gift-box':{name:'Keepsake Gift Box',price:48,image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=600&q=80',desc:'Curated box with personalized diary, pen, and note option.'},
+'name-print':{name:'Custom Name Print',price:28,image:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80',desc:'Elegant typographic print featuring a name or special date.'},
+'mug':{name:'Personalized Mug',price:24,image:'https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&q=80',desc:'High-quality ceramic mug with custom name or message.'},
+'tee':{name:'Custom Embroidered Tee',price:36,image:'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&q=80',desc:'Soft premium tee with tasteful name or monogram embroidery.'},
+'candle':{name:'Personalized Candle',price:29,image:'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80',desc:'Hand-poured soy candle with custom label and scent options.'},
+'keychain':{name:'Engraved Keychain',price:18,image:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80',desc:'Solid metal keychain with precision name or date engraving.'},
+'photo-book':{name:'Custom Photo Book',price:54,image:'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&q=80',desc:'Premium hardcover photo book filled with your favorite memories.'}
+};
+const modeBtns=document.querySelectorAll('.mode-btn'),productMode=document.getElementById('productMode'),quizMode=document.getElementById('quizMode');
+modeBtns.forEach(btn=>btn.addEventListener('click',()=>{modeBtns.forEach(b=>b.classList.remove('active'));btn.classList.add('active');const mode=btn.dataset.mode;productMode.classList.toggle('active',mode==='product');quizMode.classList.toggle('active',mode==='quiz')}));
+const productSelect=document.getElementById('productSelect'),customName=document.getElementById('customName'),previewImage=document.getElementById('previewImage'),previewText=document.getElementById('previewText'),previewTitle=document.getElementById('previewTitle'),previewDesc=document.getElementById('previewDesc'),previewPrice=document.getElementById('previewPrice'),currentPrice=document.getElementById('currentPrice'),colorOptions=document.getElementById('colorOptions'),addToCartBtn=document.getElementById('addToCartBtn');
+let selectedColor='#C9A227';
+const urlParams=new URLSearchParams(window.location.search),preselect=urlParams.get('product');if(preselect&&productData[preselect])productSelect.value=preselect;
+function updatePreview(){const data=productData[productSelect.value];if(!data)return;previewImage.src=data.image;previewTitle.textContent=data.name;previewDesc.textContent=data.desc;previewPrice.textContent=data.price;currentPrice.textContent=data.price;previewText.textContent=customName.value.trim()||'Your Name'}
+productSelect.addEventListener('change',updatePreview);customName.addEventListener('input',updatePreview);
+colorOptions.querySelectorAll('.color-swatch').forEach(swatch=>swatch.addEventListener('click',()=>{colorOptions.querySelectorAll('.color-swatch').forEach(s=>s.classList.remove('selected'));swatch.classList.add('selected');selectedColor=swatch.dataset.color;previewText.style.color=selectedColor}));
+addToCartBtn.addEventListener('click',()=>{const id=productSelect.value,data=productData[id],nameValue=customName.value.trim()||'Custom';if(!window.TGCart||typeof window.TGCart.addToCart!=='function'){alert('The cart is not available right now. Please refresh and try again.');return}window.TGCart.addToCart({id:id+'-'+Date.now(),name:data.name+(nameValue!=='Custom'?' (“'+nameValue+'”)':''),price:data.price,image:data.image,customizations:{text:nameValue,message:document.getElementById('customMessage').value,color:selectedColor,font:document.getElementById('fontStyle').value,recipient:document.getElementById('recipientName').value,occasion:document.getElementById('occasionSelect').value}})});
+updatePreview();
+const quizSteps=[
+{question:'What’s the occasion?',hint:'This helps us suggest the right tone and products.',type:'options',key:'occasion',options:[{value:'birthday',label:'Birthday',icon:'🎂'},{value:'wedding',label:'Wedding',icon:'💍'},{value:'anniversary',label:'Anniversary',icon:'💕'},{value:'corporate',label:'Corporate',icon:'🏢'},{value:'new-baby',label:'New Baby',icon:'👶'},{value:'just-because',label:'Just Because',icon:'✨'}]},
+{question:'Who is this gift for?',hint:'A name helps us personalize recommendations.',type:'text',key:'recipient',placeholder:'e.g. Sarah, my best friend, the whole team...'},
+{question:'What feeling should the gift create?',hint:'Choose the emotion you want them to feel.',type:'options',key:'feeling',options:[{value:'warm',label:'Warm & Cozy',icon:'☕'},{value:'elegant',label:'Elegant & Refined',icon:'✨'},{value:'playful',label:'Playful & Fun',icon:'🎉'},{value:'sentimental',label:'Deeply Sentimental',icon:'💌'},{value:'practical',label:'Useful & Practical',icon:'🛠️'},{value:'luxurious',label:'A Little Luxurious',icon:'👑'}]},
+{question:'Any specific product in mind?',hint:'You can pick one or leave it open.',type:'options',key:'productInterest',options:[{value:'drinkware',label:'Drinkware',icon:'🥤'},{value:'print',label:'Wall Art / Print',icon:'🖼️'},{value:'gift-set',label:'Gift Box / Set',icon:'🎁'},{value:'apparel',label:'Apparel',icon:'👕'},{value:'home',label:'Home / Candle',icon:'🕯️'},{value:'surprise',label:'Surprise Me',icon:'🌈'}]},
+{question:'Anything else we should know?',hint:'Colors, inside jokes, budget, or special requests — tell us everything.',type:'textarea',key:'notes',placeholder:'Optional but very helpful...'}
+];
+let currentStep=0;const answers={},quizContent=document.getElementById('quizContent'),quizBack=document.getElementById('quizBack'),quizNext=document.getElementById('quizNext'),progressDots=document.querySelectorAll('.quiz-step-dot');
+function renderQuizStep(){const step=quizSteps[currentStep];let html='<h2 class="quiz-question">'+step.question+'</h2><p class="quiz-hint">'+step.hint+'</p>';
+if(step.type==='options'){html+='<div class="option-grid">';step.options.forEach(opt=>{const selected=answers[step.key]===opt.value?'selected':'';html+='<div class="option-card '+selected+'" data-value="'+opt.value+'" role="button" tabindex="0" aria-pressed="'+(selected?'true':'false')+'"><div class="icon">'+opt.icon+'</div><div class="label">'+opt.label+'</div></div>'});html+='</div>'}
+else if(step.type==='text'){html+='<div class="form-group"><input type="text" id="quizInput" placeholder="'+step.placeholder+'" value="'+escapeHtml(answers[step.key]||'')+'"></div>'}
+else if(step.type==='textarea'){html+='<div class="form-group"><textarea id="quizInput" placeholder="'+step.placeholder+'">'+escapeHtml(answers[step.key]||'')+'</textarea></div>'}
+quizContent.innerHTML=html;progressDots.forEach((dot,i)=>{dot.classList.remove('active','completed');if(i<currentStep)dot.classList.add('completed');if(i===currentStep)dot.classList.add('active')});quizBack.style.visibility=currentStep===0?'hidden':'visible';quizNext.textContent=currentStep===quizSteps.length-1?'Submit & Get Ideas':'Continue';
+quizContent.querySelectorAll('.option-card').forEach(card=>{const choose=()=>{quizContent.querySelectorAll('.option-card').forEach(c=>{c.classList.remove('selected');c.setAttribute('aria-pressed','false')});card.classList.add('selected');card.setAttribute('aria-pressed','true');answers[step.key]=card.dataset.value};card.addEventListener('click',choose);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}})})}
+function escapeHtml(value){return String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]))}
+quizNext.addEventListener('click',()=>{const step=quizSteps[currentStep];if(step.type==='text'||step.type==='textarea'){const input=document.getElementById('quizInput');answers[step.key]=input?input.value.trim():''}if(step.type==='options'&&!answers[step.key]){alert('Please select an option to continue.');return}if(currentStep<quizSteps.length-1){currentStep++;renderQuizStep()}else showQuizResults()});
+quizBack.addEventListener('click',()=>{if(currentStep>0){currentStep--;renderQuizStep()}});
+function showQuizResults(){const occasionLabels={birthday:'Birthday',wedding:'Wedding',anniversary:'Anniversary',corporate:'Corporate','new-baby':'New Baby','just-because':'Just Because'},feelingLabels={warm:'Warm & Cozy',elegant:'Elegant & Refined',playful:'Playful & Fun',sentimental:'Deeply Sentimental',practical:'Useful & Practical',luxurious:'A Little Luxurious'};
+quizContent.innerHTML='<h2 class="quiz-question">Here’s what we heard</h2><p class="quiz-hint">We’ll use this to recommend the perfect gift direction.</p><div class="summary-box"><h4>Your Gift Vision</h4><div class="summary-item"><span>Occasion</span><span>'+escapeHtml(occasionLabels[answers.occasion]||'—')+'</span></div><div class="summary-item"><span>For</span><span>'+escapeHtml(answers.recipient||'—')+'</span></div><div class="summary-item"><span>Feeling</span><span>'+escapeHtml(feelingLabels[answers.feeling]||'—')+'</span></div><div class="summary-item"><span>Product interest</span><span>'+escapeHtml(answers.productInterest?answers.productInterest.replace('-',' '):'Open')+'</span></div>'+(answers.notes?'<div class="summary-item"><span>Notes</span><span style="text-align:right;max-width:60%">'+escapeHtml(answers.notes)+'</span></div>':'')+'</div><p style="margin-top:1.5rem;color:var(--soft-brown)">In a real store this would generate personalized recommendations. For now, you can jump into the product customizer or browse the shop with these ideas in mind.</p><div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap"><button class="btn btn-primary" id="goToProductMode">Customize a Product</button><a href="shop.html" class="btn btn-secondary">Browse Shop</a></div>';
+quizNext.style.display='none';quizBack.style.display='none';document.getElementById('goToProductMode').addEventListener('click',()=>{document.getElementById('modeProduct').click();window.scrollTo({top:0,behavior:'smooth'})})}
+renderQuizStep();
+</script>
+</body>
+</html>
