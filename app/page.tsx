@@ -18,7 +18,7 @@ const defaultBusinessSettings: BusinessSettings = {
   openingHours: 'Listed opening time: 8:00 am. Please confirm the day’s hours with the shop.',
   deliveryInformation: 'Ask the team about current delivery and collection options.',
   serviceInformation: '',
-  nfcMobilePayments: true,
+  nfcMobilePayments: false,
 };
 
 export default async function Home({
