@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — Treasured Genius | Personalized Gifts</title>
+  <meta name="description" content="Browse our collection of customizable gifts. Water bottles, gift boxes, name prints, mugs, apparel, candles and more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .shop-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:2rem}
+    .results-count{font-size:.95rem;color:var(--soft-brown)}
+    .results-count strong{color:var(--espresso)}
+    .sort-select{padding:.6rem 1rem;background:var(--cream);border:1px solid var(--peach);border-radius:var(--radius-sm);color:var(--chocolate);min-width:180px}
+    .empty-state{text-align:center;padding:4rem 1rem;color:var(--soft-brown)}
+    .empty-state h3{margin-bottom:.75rem}
+  </style>
+</head>
+<body>
+  <header class="header" id="header"><div class="container"><nav class="nav">
+    <a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li><li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="customize.html">Design Your Gift</a></li><li><a href="occasions.html">Occasions</a></li>
+      <li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </a>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav></div></header>
+
+  <div class="page-header"><div class="container"><h1>Shop Gifts</h1><p>Every piece is fully customizable. Choose a product, then make it personal.</p></div></div>
+
+  <section class="section-sm"><div class="container">
+    <div class="filter-bar" id="filterBar">
+      <div class="filter-group"><label for="filterCategory">Category</label><select id="filterCategory">
+        <option value="all">All Categories</option><option value="drinkware">Drinkware</option><option value="gift-sets">Gift Sets</option><option value="wall-art">Wall Art</option><option value="apparel">Apparel</option><option value="home">Home</option><option value="accessories">Accessories</option>
+      </select></div>
+      <div class="filter-group"><label for="filterOccasion">Occasion</label><select id="filterOccasion">
+        <option value="all">All Occasions</option><option value="birthday">Birthday</option><option value="wedding">Wedding</option><option value="anniversary">Anniversary</option><option value="corporate">Corporate</option><option value="new-baby">New Baby</option><option value="just-because">Just Because</option>
+      </select></div>
+      <div class="filter-group"><label for="filterPrice">Price</label><select id="filterPrice">
+        <option value="all">Any Price</option><option value="under-30">Under $30</option><option value="30-50">$30 – $50</option><option value="over-50">Over $50</option>
+      </select></div>
+      <div class="filter-group" style="margin-left:auto"><label>&nbsp;</label><button class="btn btn-sm btn-secondary" id="clearFilters">Clear Filters</button></div>
+    </div>
+    <div class="shop-toolbar">
+      <div class="results-count">Showing <strong id="resultsCount">8</strong> products</div>
+      <div><select class="sort-select" id="sortSelect"><option value="featured">Featured</option><option value="price-low">Price: Low to High</option><option value="price-high">Price: High to Low</option><option value="name">Name A–Z</option></select></div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none"><h3>No products match your filters</h3><p>Try adjusting or clearing the filters to see more gifts.</p><button class="btn btn-primary mt-3" id="resetFiltersBtn">Reset Filters</button></div>
+  </div></section>
+
+  <section class="section"><div class="container"><div class="design-cta"><div class="design-cta-content">
+    <p class="accent-text" style="color:var(--gold-light);margin-bottom:.5rem">Can’t find exactly what you want?</p>
+    <h2>Design Your Gift from Scratch</h2>
+    <p>Answer a few simple questions about the occasion, recipient, and style. We’ll help you create something completely unique.</p>
+    <a href="customize.html" class="btn btn-primary btn-lg">Start Designing
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div></div></div></section>
+
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a><p>We help you turn ordinary objects into meaningful gifts. Designed with heart, made with care.</p></div>
+    <div class="footer-links"><h4>Explore</h4><a href="shop.html">Shop All</a><a href="customize.html">Design Your Gift</a><a href="occasions.html">Occasions</a><a href="about.html">Our Story</a></div>
+    <div class="footer-links"><h4>Help</h4><a href="contact.html">Contact Us</a><a href="contact.html#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a></div>
+    <div class="footer-links"><h4>Connect</h4><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a><a href="mailto:hello@treasuredgenius.com">hello@treasuredgenius.com</a></div>
+  </div><div class="footer-bottom"><p>© 2026 Treasured Genius. Made with love for meaningful gifting.</p><p>Privacy · Terms</p></div></div></footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    const products = [
+      {id:'water-bottle',name:'Custom Name Water Bottle',category:'drinkware',occasions:['birthday','corporate','just-because'],price:32,image:'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&q=80',badge:'Bestseller',desc:'Premium stainless steel bottle with elegant name engraving.'},
+      {id:'gift-box',name:'Keepsake Gift Box',category:'gift-sets',occasions:['birthday','anniversary','wedding','just-because'],price:48,image:'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=600&q=80',badge:'Popular',desc:'Curated box with personalized diary, pen, and note option.'},
+      {id:'name-print',name:'Custom Name Print',category:'wall-art',occasions:['birthday','new-baby','wedding','just-because'],price:28,image:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&q=80',badge:null,desc:'Elegant typographic print featuring a name or special date.'},
+      {id:'mug',name:'Personalized Mug',category:'drinkware',occasions:['birthday','corporate','just-because'],price:24,image:'https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&q=80',badge:null,desc:'High-quality ceramic mug with custom name or message.'},
+      {id:'tee',name:'Custom Embroidered Tee',category:'apparel',occasions:['birthday','just-because'],price:36,image:'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600&q=80',badge:null,desc:'Soft premium tee with tasteful name or monogram embroidery.'},
+      {id:'candle',name:'Personalized Candle',category:'home',occasions:['anniversary','wedding','just-because'],price:29,image:'https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&q=80',badge:'New',desc:'Hand-poured soy candle with custom label and scent options.'},
+      {id:'keychain',name:'Engraved Keychain',category:'accessories',occasions:['birthday','corporate','just-because'],price:18,image:'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&q=80',badge:null,desc:'Solid metal keychain with precision name or date engraving.'},
+      {id:'photo-book',name:'Custom Photo Book',category:'gift-sets',occasions:['anniversary','wedding','new-baby','just-because'],price:54,image:'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&q=80',badge:null,desc:'Premium hardcover photo book filled with your favorite memories.'}
+    ];
+
+    const grid=document.getElementById('productsGrid');
+    const emptyState=document.getElementById('emptyState');
+    const resultsCount=document.getElementById('resultsCount');
+    const filterCategory=document.getElementById('filterCategory');
+    const filterOccasion=document.getElementById('filterOccasion');
+    const filterPrice=document.getElementById('filterPrice');
+    const sortSelect=document.getElementById('sortSelect');
+    const clearFilters=document.getElementById('clearFilters');
+    const resetFiltersBtn=document.getElementById('resetFiltersBtn');
+
+    function renderProducts(list){
+      grid.innerHTML='';
+      if(list.length===0){grid.style.display='none';emptyState.style.display='block';resultsCount.textContent='0';return;}
+      grid.style.display='grid';emptyState.style.display='none';resultsCount.textContent=list.length;
+      list.forEach(product=>{
+        const card=document.createElement('article');
+        card.className='product-card';
+        const badge=product.badge?'<span class="product-badge">'+product.badge+'</span>':'';
+        card.innerHTML='<div class="product-image"><img src="'+product.image+'" alt="'+product.name+'" loading="lazy" />'+badge+'</div>'+
+          '<div class="product-info"><div class="product-category">'+formatCategory(product.category)+'</div>'+
+          '<h3 class="product-title">'+product.name+'</h3><p class="product-desc">'+product.desc+'</p>'+
+          '<div class="product-footer"><div class="product-price">$'+product.price+' <span>from</span></div>'+
+          '<a href="customize.html?product='+product.id+'" class="btn btn-sm btn-primary">Customize</a></div></div>';
+        grid.appendChild(card);
+      });
+    }
+
+    function formatCategory(cat){return cat.split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');}
+    function applyFilters(){
+      let filtered=[...products];
+      const cat=filterCategory.value,occ=filterOccasion.value,price=filterPrice.value,sort=sortSelect.value;
+      if(cat!=='all')filtered=filtered.filter(p=>p.category===cat);
+      if(occ!=='all')filtered=filtered.filter(p=>p.occasions.includes(occ));
+      if(price==='under-30')filtered=filtered.filter(p=>p.price<30);
+      else if(price==='30-50')filtered=filtered.filter(p=>p.price>=30&&p.price<=50);
+      else if(price==='over-50')filtered=filtered.filter(p=>p.price>50);
+      if(sort==='price-low')filtered.sort((a,b)=>a.price-b.price);
+      else if(sort==='price-high')filtered.sort((a,b)=>b.price-a.price);
+      else if(sort==='name')filtered.sort((a,b)=>a.name.localeCompare(b.name));
+      renderProducts(filtered);
+    }
+    function resetAllFilters(){filterCategory.value='all';filterOccasion.value='all';filterPrice.value='all';sortSelect.value='featured';applyFilters();}
+    filterCategory.addEventListener('change',applyFilters);
+    filterOccasion.addEventListener('change',applyFilters);
+    filterPrice.addEventListener('change',applyFilters);
+    sortSelect.addEventListener('change',applyFilters);
+    clearFilters.addEventListener('click',resetAllFilters);
+    resetFiltersBtn.addEventListener('click',resetAllFilters);
+    renderProducts(products);
+  </script>
+</body>
+</html>
