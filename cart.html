@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart — Treasured Genius</title>
+  <meta name="description" content="Review your personalized gifts before checkout." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .cart-layout{display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start}
+    @media(max-width:900px){.cart-layout{grid-template-columns:1fr}}
+    .cart-items{display:flex;flex-direction:column;gap:1.5rem}
+    .cart-item{display:grid;grid-template-columns:120px 1fr auto;gap:1.5rem;background:var(--cream);border-radius:var(--radius-lg);padding:1.25rem;border:1px solid rgba(201,162,39,.12);align-items:center}
+    @media(max-width:600px){.cart-item{grid-template-columns:90px 1fr;gap:1rem}.cart-item-actions{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;margin-top:.5rem}}
+    .cart-item-image{width:120px;height:120px;border-radius:var(--radius-md);overflow:hidden;background:var(--peach)}
+    .cart-item-image img{width:100%;height:100%;object-fit:cover}
+    .cart-item-info h3{font-size:1.15rem;margin-bottom:.35rem}
+    .cart-item-meta{font-size:.9rem;color:var(--soft-brown);margin-bottom:.5rem}
+    .cart-item-custom{font-size:.85rem;color:var(--cinnamon);background:rgba(201,162,39,.1);display:inline-block;padding:.25rem .6rem;border-radius:var(--radius-full);margin-top:.35rem}
+    .cart-item-price{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--espresso);white-space:nowrap}
+    .qty-controls{display:flex;align-items:center;gap:.5rem;margin-top:.75rem}
+    .qty-btn{width:32px;height:32px;border-radius:50%;background:white;border:1.5px solid var(--peach);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--espresso);transition:var(--transition);cursor:pointer}
+    .qty-btn:hover{border-color:var(--gold);background:var(--gold);color:white}
+    .qty-value{min-width:28px;text-align:center;font-weight:600}
+    .remove-btn{background:none;border:none;color:var(--cinnamon);font-size:.85rem;font-weight:500;cursor:pointer;margin-top:.5rem;transition:var(--transition)}
+    .remove-btn:hover{color:var(--cinnamon-dark);text-decoration:underline}
+    .cart-summary{background:var(--cream);border-radius:var(--radius-xl);padding:2rem;border:1px solid rgba(201,162,39,.15);position:sticky;top:100px;box-shadow:var(--shadow-md)}
+    .cart-summary h2{font-size:1.4rem;margin-bottom:1.5rem}
+    .summary-row{display:flex;justify-content:space-between;gap:1rem;margin-bottom:.85rem;font-size:.95rem}
+    .summary-row.total{font-size:1.25rem;font-weight:700;font-family:var(--font-display);color:var(--espresso);border-top:1.5px solid rgba(201,162,39,.2);padding-top:1rem;margin-top:1rem;margin-bottom:1.5rem}
+    .summary-row span:last-child{font-weight:600}
+    .empty-cart{text-align:center;padding:5rem 1rem}
+    .empty-cart-icon{font-size:4rem;margin-bottom:1.5rem;opacity:.6}
+    .empty-cart h2{margin-bottom:.75rem}
+    .empty-cart p{color:var(--soft-brown);margin-bottom:2rem;max-width:360px;margin-left:auto;margin-right:auto}
+  </style>
+</head>
+<body>
+<header class="header" id="header"><div class="container"><nav class="nav">
+  <a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop</a></li><li><a href="customize.html">Design Your Gift</a></li><li><a href="occasions.html">Occasions</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-actions"><a href="cart.html" class="cart-btn" aria-label="Cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M6 6L5 3H2"/></svg><span class="cart-count" id="cartCount">0</span></a><button class="mobile-toggle" id="mobileToggle" aria-label="Menu"><span></span><span></span><span></span></button></div>
+</nav></div></header>
+<div class="page-header"><div class="container"><h1>Your Cart</h1><p>Review your personalized gifts before checkout.</p></div></div>
+<section class="section-sm"><div class="container">
+  <div class="empty-cart" id="emptyCart" style="display:none"><div class="empty-cart-icon">🛒</div><h2>Your cart is empty</h2><p>Looks like you haven’t added any personalized gifts yet. Let’s create something special.</p><div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap"><a href="shop.html" class="btn btn-primary">Browse Gifts</a><a href="customize.html" class="btn btn-secondary">Design Your Gift</a></div></div>
+  <div class="cart-layout" id="cartContent" style="display:none"><div><div class="cart-items" id="cartItems"></div></div>
+    <div class="cart-summary"><h2>Order Summary</h2><div class="summary-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div><div class="summary-row"><span>Shipping</span><span id="shipping">Calculated at checkout</span></div><div class="summary-row total"><span>Total</span><span id="total">$0.00</span></div>
+      <a href="checkout.html" class="btn btn-primary btn-lg" style="width:100%;margin-bottom:1rem">Proceed to Checkout</a><a href="shop.html" class="btn btn-secondary" style="width:100%">Continue Shopping</a><p style="font-size:.85rem;color:var(--soft-brown);text-align:center;margin-top:1.25rem">Secure checkout · Free shipping on orders over $75</p>
+    </div>
+  </div>
+</div></section>
+<footer class="footer"><div class="container"><div class="footer-grid">
+  <div class="footer-brand"><a href="index.html" class="logo"><span class="logo-icon">✦</span> Treasured Genius</a><p>We help you turn ordinary objects into meaningful gifts. Designed with heart, made with care.</p></div>
+  <div class="footer-links"><h4>Explore</h4><a href="shop.html">Shop All</a><a href="customize.html">Design Your Gift</a><a href="occasions.html">Occasions</a><a href="about.html">Our Story</a></div>
+  <div class="footer-links"><h4>Help</h4><a href="contact.html">Contact Us</a><a href="contact.html#faq">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a></div>
+  <div class="footer-links"><h4>Connect</h4><a href="#">Instagram</a><a href="#">Pinterest</a><a href="#">TikTok</a><a href="mailto:hello@treasuredgenius.com">hello@treasuredgenius.com</a></div>
+</div><div class="footer-bottom"><p>© 2026 Treasured Genius. Made with love for meaningful gifting.</p><p>Privacy · Terms</p></div></div></footer>
+<script src="js/main.js"></script>
+<script>
+function renderCart(){
+  const emptyCart=document.getElementById('emptyCart'),cartContent=document.getElementById('cartContent'),cartItems=document.getElementById('cartItems');
+  if(!window.TGCart){emptyCart.style.display='block';cartContent.style.display='none';return}
+  const cart=window.TGCart.getCart();
+  if(!cart.length){emptyCart.style.display='block';cartContent.style.display='none';return}
+  emptyCart.style.display='none';cartContent.style.display='grid';cartItems.replaceChildren();
+  cart.forEach(item=>{
+    const quantity=Math.max(1,Number(item.quantity)||1),price=Number(item.price)||0;
+    const el=document.createElement('article');el.className='cart-item';
+    const imageWrap=document.createElement('div');imageWrap.className='cart-item-image';
+    const img=document.createElement('img');img.src=item.image||'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300&q=80';img.alt=item.name||'Gift';img.loading='lazy';imageWrap.appendChild(img);
+    const info=document.createElement('div');info.className='cart-item-info';
+    const title=document.createElement('h3');title.textContent=item.name||'Personalized Gift';info.appendChild(title);
+    const meta=document.createElement('div');meta.className='cart-item-meta';meta.textContent='Personalized gift';info.appendChild(meta);
+    if(item.customizations&&item.customizations.text){const custom=document.createElement('div');custom.className='cart-item-custom';custom.textContent='“'+item.customizations.text+'”';info.appendChild(custom)}
+    const controls=document.createElement('div');controls.className='qty-controls';
+    const minus=document.createElement('button');minus.className='qty-btn';minus.type='button';minus.textContent='−';minus.setAttribute('aria-label','Decrease quantity');minus.dataset.action='decrease';minus.dataset.id=item.id;
+    const qty=document.createElement('span');qty.className='qty-value';qty.textContent=quantity;
+    const plus=document.createElement('button');plus.className='qty-btn';plus.type='button';plus.textContent='+';plus.setAttribute('aria-label','Increase quantity');plus.dataset.action='increase';plus.dataset.id=item.id;
+    controls.append(minus,qty,plus);info.appendChild(controls);
+    const remove=document.createElement('button');remove.className='remove-btn';remove.type='button';remove.textContent='Remove';remove.dataset.id=item.id;info.appendChild(remove);
+    const actions=document.createElement('div');actions.className='cart-item-actions';const itemPrice=document.createElement('div');itemPrice.className='cart-item-price';itemPrice.textContent='$'+(price*quantity).toFixed(2);actions.appendChild(itemPrice);
+    el.append(imageWrap,info,actions);cartItems.appendChild(el);
+  });
+  const subtotal=window.TGCart.getCartTotal();document.getElementById('subtotal').textContent='$'+subtotal.toFixed(2);document.getElementById('total').textContent='$'+subtotal.toFixed(2);
+  cartItems.querySelectorAll('.qty-btn').forEach(btn=>btn.addEventListener('click',()=>{const current=window.TGCart.getCart().find(item=>item.id===btn.dataset.id);if(!current)return;let qty=Number(current.quantity)||1;qty+=btn.dataset.action==='increase'?1:-1;window.TGCart.updateQuantity(btn.dataset.id,qty);renderCart()}));
+  cartItems.querySelectorAll('.remove-btn').forEach(btn=>btn.addEventListener('click',()=>{window.TGCart.removeFromCart(btn.dataset.id);renderCart()}));
+}
+renderCart();
+</script>
+</body>
+</html>
