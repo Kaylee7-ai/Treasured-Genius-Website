@@ -81,7 +81,7 @@ function updateCartUI() {
   }
 }
 
-function addToCart(product) {
+function initCart() {\n  updateCartUI();\n}\n\nfunction addToCart(product) {
   const cart = getCart();
   const existing = cart.find(item => item.id === product.id);
 
