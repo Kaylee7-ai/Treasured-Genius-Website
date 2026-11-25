@@ -70,7 +70,7 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
           {product.is_featured && <span className="featured-tag">CATALOGUE PICK</span>}</div>
         <div className="product-card-meta"><span>{category?.name ?? 'Gift ideas'}</span><span>{product.availability.replace(/_/g, ' ')}</span></div>
         <h2>{product.name}</h2><p>{product.short_description}</p><strong>Request a quotation</strong></Link>;
-    })}</div> : <div className="store-empty"><h2>Nothing in this selection just yet.</h2><p>Try another search or contact Treasured Genius about a custom gift.</p><Link className="store-whatsapp" href="/#custom-order">Start a custom request ↗</Link></div>}
+    })}</div> : <div className="store-empty"><h2>Nothing in this selection just yet.</h2><p>Try another search or contact Treasured Genius about a custom gift.</p><Link className="store-whatsapp" href="/customize">Start a custom request ↗</Link></div>}
     <footer className="store-footer"><span>THE ART OF GIVING</span><span>ACCRA, GHANA</span><Link href="/">Back to Treasured Genius</Link></footer>
   </main>;
 }
