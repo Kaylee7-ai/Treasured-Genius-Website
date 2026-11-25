@@ -354,3 +354,14 @@ a { text-decoration-thickness: 1px; text-underline-offset: 4px; }
   .footer-details { justify-items: start; }
   .store-page { padding-inline: 18px; }
 }
+
+
+/* Shop sub-navigation */
+.store-nav-links { display:flex; align-items:center; justify-content:flex-end; gap:clamp(12px,2.2vw,30px); flex-wrap:wrap; }
+.store-nav-links a { color:#806e75; font-size:10px; letter-spacing:.04em; }
+.store-nav-links a:hover { color:#8e5266; }
+@media(max-width:650px) {
+  .store-topbar { height:auto; min-height:76px; padding:14px 0; align-items:flex-start; gap:16px; }
+  .store-nav-links { justify-content:flex-end; gap:9px 13px; max-width:65%; }
+  .store-nav-links a { font-size:9px; }
+}
