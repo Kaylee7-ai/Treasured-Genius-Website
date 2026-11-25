@@ -35,7 +35,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section className="product-information"><p className="eyebrow">{example.category}</p><h1>{example.name}</h1><p className="product-price">Request a quotation</p>
         <p className="product-stock">Enquire for current availability</p><p className="product-description">{example.description}</p>
         <div className="product-personalisation"><strong>Options shown in catalogue</strong><ul>{example.personalisationOptions.map((option) => <li key={option}>{option}</li>)}</ul><p>Colours shown: {example.colours.join(' and ')}.</p></div>
-        <Link className="store-whatsapp" href={`/?item=${encodeURIComponent(example.slug)}#custom-order`}>Enquire about this item ↗</Link>
+        <Link className="store-whatsapp" href={`/customize?item=${encodeURIComponent(example.slug)}`}>Enquire about this item ↗</Link>
         <p className="product-note">This is a catalogue example, not a confirmed stock listing. The shop will confirm the final details and price before an order is accepted.</p></section></div>
     <footer className="store-footer"><span>THE ART OF GIVING</span><span>ACCRA, GHANA</span><Link href="/">Back to Treasured Genius</Link></footer></main>;
 }
@@ -54,6 +54,6 @@ function LiveProduct({ product }: { product: StoreProduct }) {
         <p className="product-price">{product.price_mode === 'fixed' && product.price_ghs !== null ? `GH₵ ${Number(product.price_ghs).toFixed(2)}` : 'Request a quotation'}</p>
         <p className="product-stock">{product.availability.replace(/_/g, ' ')}</p><p className="product-description">{product.description || product.short_description}</p>
         {!!product.personalisation_options?.length && <div className="product-personalisation"><strong>Personalisation options</strong><ul>{product.personalisation_options.map((option) => <li key={option}>{option}</li>)}</ul></div>}
-        <Link className="store-whatsapp" href={`/?item=${encodeURIComponent(product.slug)}#custom-order`}>Request this item ↗</Link></section></div>
+        <Link className="store-whatsapp" href={`/customize?item=${encodeURIComponent(product.slug)}`}>Request this item ↗</Link></section></div>
     <footer className="store-footer"><span>THE ART OF GIVING</span><span>ACCRA, GHANA</span><Link href="/">Back to Treasured Genius</Link></footer></main>;
 }
