@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400,20,1;0,9..144,500,20,1;0,9..144,600,20,1;0,9..144,700,20,1;0,9..144,800,20,1;1,9..144,500,20,1;1,9..144,700,20,1&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 /* Treasured Genius — cinematic, warm and unified gift atelier */
 :root {
@@ -491,4 +491,56 @@ body { font-family: var(--font-sans), sans-serif; letter-spacing: .005em; }
   .hero-section::before, .hero-art::before { animation: none !important; }
   .reveal-on-scroll { opacity: 1; transform: none; transition: none; }
   .scroll-progress { display: none; }
+}
+
+
+/* Non-WebGL fallback: the same dark lacquer, lifted lid and warm internal light. */
+.hero-static-fallback {
+  background:
+    radial-gradient(ellipse at 52% 52%,rgba(241,217,168,.22),rgba(169,111,126,.12) 32%,transparent 63%),
+    radial-gradient(ellipse at 50% 90%,rgba(0,0,0,.58),transparent 60%),
+    linear-gradient(135deg,#221321,#160e19 72%) !important;
+}
+.fallback-halo {
+  width: min(62vw,620px); border: 1px solid rgba(241,217,168,.55);
+  box-shadow: 0 0 38px rgba(216,183,123,.18),0 0 100px rgba(169,111,126,.12),inset 0 0 70px rgba(241,217,168,.09);
+}
+.fallback-gift {
+  width: clamp(235px,34vw,420px); height: clamp(165px,24vw,295px);
+  border: 1px solid rgba(241,217,168,.64); border-radius: 14px 14px 20px 20px;
+  background: linear-gradient(115deg,#69394e 0%,#47263a 46%,#321827 100%) !important;
+  box-shadow: 28px 42px 75px rgba(0,0,0,.55),0 0 35px rgba(216,183,123,.16),inset 0 2px 5px rgba(255,240,220,.18);
+  transform: perspective(1000px) rotateY(-18deg) rotateX(7deg) rotateZ(-4deg);
+}
+.fallback-lid {
+  top: -19%; left: -4%; width: 108%; height: 20%;
+  border: 1px solid rgba(241,217,168,.78); border-radius: 10px;
+  background: linear-gradient(110deg,#805066,#593247 60%,#45253a) !important;
+  box-shadow: 0 13px 26px rgba(0,0,0,.4),0 0 28px rgba(216,183,123,.14);
+  transform: translateY(-6px) rotate(-2deg);
+}
+.fallback-band {
+  left: 42%; width: 16%; height: 104%; top: -2%;
+  background: linear-gradient(90deg,#947044,#d8b77b 28%,#f1d9a8 50%,#c6a16a 74%,#8f6b43) !important;
+  box-shadow: 0 0 23px rgba(241,217,168,.27),inset 2px 0 4px rgba(255,255,255,.36);
+}
+.fallback-bow {
+  top: -47%; width: 29%; height: 45%;
+  border: clamp(10px,1.3vw,17px) solid #e2c58f !important;
+  border-radius: 78% 22% 70% 30%;
+  background: linear-gradient(135deg,rgba(255,247,225,.6),rgba(216,183,123,.12) 55%,rgba(90,48,62,.2)) !important;
+  box-shadow: 0 9px 22px rgba(0,0,0,.28),0 0 22px rgba(241,217,168,.24);
+  filter: drop-shadow(0 0 10px rgba(216,183,123,.2));
+}
+.fallback-bow-left { left: 25%; transform: rotate(32deg) scaleY(1.04); }
+.fallback-bow-right { right: 25%; transform: scaleX(-1) rotate(32deg) scaleY(1.04); }
+.fallback-knot {
+  top: -18%; left: 46%; width: 9%; aspect-ratio: 1;
+  background: radial-gradient(circle at 32% 28%,#fff0c9,#d8b77b 58%,#8b6542) !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,.35),0 0 24px rgba(241,217,168,.42);
+}
+.hero-art-grain { opacity: .065; mix-blend-mode: screen; }
+@media(max-width:700px) {
+  .fallback-halo { width: 88vw; }
+  .fallback-gift { width: clamp(205px,68vw,315px); height: clamp(145px,48vw,230px); }
 }
