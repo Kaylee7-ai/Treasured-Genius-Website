@@ -17,7 +17,7 @@ export default async function ContactPage() {
       <Navigation />
       <section className="inner-hero">
         <p className="eyebrow">WE WOULD LOVE TO HEAR YOUR IDEA</p>
-        <h1>Let's make it<br /><em>meaningful.</em></h1>
+        <h1>Let&apos;s make it<br /><em>meaningful.</em></h1>
         <p>Have a question about a gift, custom printing or a personal project? Get in touch with the Treasured Genius team or visit the studio in Accra.</p>
       </section>
       <section className="inner-content inner-content-white">
