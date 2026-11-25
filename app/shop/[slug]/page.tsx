@@ -25,7 +25,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const example = getCatalogueExample(slug);
   if (!example) notFound();
   return <main className="store-page">
-    <header className="store-topbar"><Link href="/" className="store-brand">TREASURED <i>GENIUS</i></Link><Link href="/shop" className="store-back">← All examples</Link></header>
+    <header className="store-topbar">
+      <Link href="/" className="store-brand">TREASURED <i>GENIUS</i></Link>
+      <nav className="store-nav-links" aria-label="Product navigation">
+        <Link href="/shop">← All examples</Link><Link href="/occasions">Gift ideas</Link><Link href="/customize">Customise</Link><Link href="/contact">Contact</Link>
+      </nav>
+    </header>
     <div className="product-detail"><div className="product-gallery"><div className={`catalogue-art catalogue-art-large catalogue-art-${example.visual}`}><span>{example.visual === 'bible' ? 'NKJV' : 'TG'}</span><small>{example.name}</small></div></div>
       <section className="product-information"><p className="eyebrow">{example.category}</p><h1>{example.name}</h1><p className="product-price">Request a quotation</p>
         <p className="product-stock">Enquire for current availability</p><p className="product-description">{example.description}</p>
@@ -38,7 +43,12 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 function LiveProduct({ product }: { product: StoreProduct }) {
   const images = [...(product.product_images ?? [])].sort((a, b) => a.sort_order - b.sort_order);
   const category = Array.isArray(product.categories) ? product.categories[0] : product.categories;
-  return <main className="store-page"><header className="store-topbar"><Link href="/" className="store-brand">TREASURED <i>GENIUS</i></Link><Link href="/shop" className="store-back">← All examples</Link></header>
+  return <main className="store-page"><header className="store-topbar">
+      <Link href="/" className="store-brand">TREASURED <i>GENIUS</i></Link>
+      <nav className="store-nav-links" aria-label="Product navigation">
+        <Link href="/shop">← All examples</Link><Link href="/occasions">Gift ideas</Link><Link href="/customize">Customise</Link><Link href="/contact">Contact</Link>
+      </nav>
+    </header>
     <div className="product-detail"><div className="product-gallery">{images.map((image, index) => <div className="product-gallery-image" key={image.id}><Image src={image.image_url} alt={image.alt_text || product.name} width={900} height={760} unoptimized priority={index === 0} /></div>)}</div>
       <section className="product-information"><p className="eyebrow">{category?.name ?? 'THE TREASURED EDIT'}</p><h1>{product.name}</h1>
         <p className="product-price">{product.price_mode === 'fixed' && product.price_ghs !== null ? `GH₵ ${Number(product.price_ghs).toFixed(2)}` : 'Request a quotation'}</p>
