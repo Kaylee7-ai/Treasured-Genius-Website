@@ -6,6 +6,7 @@ type SampleProduct = { id: string; name: string; slug: string };
 type Props = {
   sampleProducts: SampleProduct[];
   initialProductId?: string;
+  initialOccasion?: string;
   onlineSubmissionEnabled: boolean;
 };
 
@@ -38,6 +39,7 @@ const fileExtensions: Record<string, string> = {
 export default function CustomOrderForm({
   sampleProducts,
   initialProductId,
+  initialOccasion = 'Birthday',
   onlineSubmissionEnabled,
 }: Props) {
   const [product, setProduct] = useState('Water bottle');
@@ -47,7 +49,7 @@ export default function CustomOrderForm({
   const [artworkDescription, setArtworkDescription] = useState('');
   const [placement, setPlacement] = useState('One side');
   const [quantity, setQuantity] = useState('1');
-  const [occasion, setOccasion] = useState('Birthday');
+  const [occasion, setOccasion] = useState(initialOccasion);
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -160,7 +162,7 @@ export default function CustomOrderForm({
       setArtworkDescription('');
       setPlacement('One side');
       setQuantity('1');
-      setOccasion('Birthday');
+      setOccasion(initialOccasion);
       setCustomerName('');
       setCustomerPhone('');
       setCustomerEmail('');
