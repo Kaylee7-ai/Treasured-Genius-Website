@@ -110,13 +110,13 @@ function GiftSculpture({ reducedMotion }: { reducedMotion: boolean }) {
 
         {/* A softly illuminated interior visible through the floating lid. */}
         <RoundedBox args={[2.18, 0.035, 1.54]} radius={0.045} smoothness={6} position={[0, 0.525, 0]} receiveShadow>
-          <meshPhysicalMaterial color="#8B5A54" emissive="#6C352E" emissiveIntensity={0.42} roughness={0.48} />
+          <meshPhysicalMaterial color="#8B5A54" emissive="#6C352E" emissiveIntensity={0.62} roughness={0.48} />
         </RoundedBox>
         <mesh ref={innerLight} position={[0, 0.72, 0.08]}>
           <sphereGeometry args={[0.24, 32, 24]} />
           <meshBasicMaterial color="#F4D7A4" transparent opacity={0.74} />
         </mesh>
-        <pointLight position={[0, 0.82, 0.2]} intensity={8.5} distance={4.5} decay={2} color="#F1D19A" />
+        <pointLight position={[0, 0.82, 0.2]} intensity={12} distance={5} decay={2} color="#F1D19A" />
 
         {/* Champagne ribbon wraps the front face, then continues over the lid. */}
         <RoundedBox args={[0.28, 1.38, 0.035]} radius={0.018} smoothness={5} position={[0, -0.19, 0.963]} castShadow>
@@ -167,15 +167,15 @@ function Scene({ reducedMotion }: { reducedMotion: boolean }) {
       <fog attach="fog" args={['#160E19', 8, 18]} />
       <StudioEnvironment />
       <ambientLight intensity={0.38} color="#EAD7C0" />
-      <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={24} color="#F1D9A8" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} />
-      <spotLight position={[4, 3.5, -3.5]} angle={0.6} penumbra={1} intensity={8} color="#A96F7E" />
-      <pointLight position={[0, 0.4, 3]} intensity={3.5} distance={7} color="#D8B77B" />
+      <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={28} color="#F1D9A8" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} />
+      <spotLight position={[4, 3.5, -3.5]} angle={0.6} penumbra={1} intensity={10} color="#A96F7E" />
+      <pointLight position={[0, 0.4, 3]} intensity={5} distance={8} color="#D8B77B" />
       <mesh position={[0, -0.02, -1.18]} rotation={[0, 0, 0]}>
         <torusGeometry args={[1.82, 0.012, 10, 140]} />
         <meshBasicMaterial color="#D8B77B" transparent opacity={0.48} />
       </mesh>
       <GiftSculpture reducedMotion={reducedMotion} />
-      <Sparkles count={48} scale={[4.5, 3.6, 3]} size={2.1} speed={0.28} opacity={0.72} color="#EED8AB" />
+      <Sparkles count={64} scale={[4.5, 3.6, 3]} size={2.3} speed={0.3} opacity={0.88} color="#EED8AB" />
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.24, 0]} receiveShadow>
         <planeGeometry args={[30, 30]} />
         <meshPhysicalMaterial color="#21121F" roughness={0.22} metalness={0.22} clearcoat={0.78} clearcoatRoughness={0.17} />
@@ -183,7 +183,7 @@ function Scene({ reducedMotion }: { reducedMotion: boolean }) {
       <ContactShadows position={[0, -1.22, 0]} opacity={0.58} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#100912" />
       {!reducedMotion && (
         <EffectComposer multisampling={4}>
-          <Bloom intensity={0.62} luminanceThreshold={0.65} luminanceSmoothing={0.18} mipmapBlur />
+          <Bloom intensity={0.98} luminanceThreshold={0.48} luminanceSmoothing={0.22} mipmapBlur />
           <Vignette eskil={false} offset={0.2} darkness={0.52} />
         </EffectComposer>
       )}
