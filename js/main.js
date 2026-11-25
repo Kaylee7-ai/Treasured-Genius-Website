@@ -103,7 +103,7 @@ function addToCart(product) {
   }
 
   saveCart(cart);
-  showToast(\`\${product.name} added to cart\`);
+  showToast(`${product.name} added to cart`);
 }
 
 function removeFromCart(productId) {
@@ -188,7 +188,7 @@ function initSmoothScroll() {
 /* ---------- Extra CSS injected for mobile menu + toast ---------- */
 (function injectExtraStyles() {
   const style = document.createElement('style');
-  style.textContent = \`
+  style.textContent = `
     /* Mobile nav open state */
     @media (max-width: 768px) {
       .nav-links {
@@ -257,6 +257,6 @@ function initSmoothScroll() {
       visibility: visible;
       transform: translateX(-50%) translateY(0);
     }
-  \`;
+  `;
   document.head.appendChild(style);
 })();

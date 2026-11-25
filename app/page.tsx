@@ -1,6 +1,7 @@
 import Hero3D from '@/components/Hero3D';
 import Navigation from '@/components/Navigation';
 import CustomOrderForm from '@/components/CustomOrderForm';
+import SiteFooter from '@/components/SiteFooter';
 import { About, Collections, CraftPrinting, Experience, FeaturedProducts, FinalCTA, RealWorkGallery, Reviews, Visit } from '@/components/sections/Sections';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
@@ -99,11 +100,7 @@ export default async function Home({
         nfcMobilePayments={businessSettings.nfcMobilePayments}
       />
       <FinalCTA />
-      <footer className="site-footer">
-        <a href="#top" className="footer-brand">TREASURED <i>GENIUS</i></a>
-        <span>THE ART OF GIVING</span>
-        <span>ACCRA, GHANA · © {new Date().getFullYear()}</span>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

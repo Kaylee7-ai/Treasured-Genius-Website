@@ -178,9 +178,9 @@ function GlossFloor() {
         const radius = Math.min(1, Math.sqrt(dx * dx + dy * dy));
         const glow = Math.pow(Math.max(0, 1 - radius), 1.7);
         const i = (y * size + x) * 4;
-        data[i] = Math.round(7 + glow * 4);
-        data[i + 1] = Math.round(18 + glow * 12);
-        data[i + 2] = Math.round(13 + glow * 8);
+        data[i] = Math.round(35 + glow * 22);
+        data[i + 1] = Math.round(22 + glow * 12);
+        data[i + 2] = Math.round(31 + glow * 18);
         data[i + 3] = 255;
       }
     }
@@ -192,7 +192,7 @@ function GlossFloor() {
   useEffect(() => () => texture.dispose(), [texture]);
   return <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.285, 0]} receiveShadow>
     <planeGeometry args={[30, 30]} />
-    <meshPhysicalMaterial map={texture} color="#0E1F17" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
+    <meshPhysicalMaterial map={texture} color="#281723" roughness={0.19} metalness={0.28} clearcoat={0.78} clearcoatRoughness={0.18} />
   </mesh>;
 }
 
@@ -390,7 +390,7 @@ function StudioEnvironment() {
     <group>
       <Lightformer form="rect" intensity={3.1} color="#EEDDB8" scale={[7, 4, 1]} position={[-1, 5, 1]} />
       <Lightformer form="rect" intensity={2.2} color="#D9BF8C" scale={[3, 5, 1]} position={[-4, 1, 2]} rotation={[0, Math.PI / 3, 0]} />
-      <Lightformer form="rect" intensity={1.4} color="#A9B8C9" scale={[3, 5, 1]} position={[4, 1, -2]} rotation={[0, -Math.PI / 3, 0]} />
+      <Lightformer form="rect" intensity={1.4} color="#D7B8B7" scale={[3, 5, 1]} position={[4, 1, -2]} rotation={[0, -Math.PI / 3, 0]} />
       <Lightformer form="rect" intensity={1.8} color="#D9BF8C" scale={[5, 3, 1]} position={[0, 3, -5]} rotation={[0, Math.PI, 0]} />
       <Lightformer form="rect" intensity={0.8} color="#F6F0E6" scale={[2, 2, 1]} position={[0, -2, 3]} rotation={[Math.PI / 2, 0, 0]} />
     </group>
@@ -399,15 +399,15 @@ function StudioEnvironment() {
 
 function Scene({ reducedMotion }: { reducedMotion: boolean }) {
   return <>
-    <color attach="background" args={['#07120D']} />
-    <fog attach="fog" args={['#07120D', 8, 18]} />
+    <color attach="background" args={['#281723']} />
+    <fog attach="fog" args={['#281723', 8, 18]} />
     <StudioEnvironment />
-    <ambientLight intensity={0.22} color="#BDB3A6" />
+    <ambientLight intensity={0.22} color="#E9D8CD" />
     <spotLight position={[-4.5, 6, 5]} angle={0.48} penumbra={1} intensity={22} color="#EEDDB8" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0005} shadow-normalBias={0.02} />
     <spotLight position={[0.5, 3.5, -4.5]} angle={0.62} penumbra={1} intensity={5} color="#F6F1E4" />
     <GiftSculpture reducedMotion={reducedMotion} />
     <GlossFloor />
-    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#020805" />
+    <ContactShadows position={[0, -1.27, 0]} opacity={0.52} scale={5.8} blur={3.2} far={3.2} resolution={512} color="#1B1018" />
     {!reducedMotion && <EffectComposer multisampling={4}>
       <Bloom intensity={0.045} luminanceThreshold={1.12} luminanceSmoothing={0.08} />
       <Vignette eskil={false} offset={0.24} darkness={0.4} />
