@@ -544,3 +544,95 @@ body { font-family: var(--font-sans), sans-serif; letter-spacing: .005em; }
   .fallback-halo { width: 88vw; }
   .fallback-gift { width: clamp(205px,68vw,315px); height: clamp(145px,48vw,230px); }
 }
+
+
+/* Glow-only enhancement — keep the existing palette, layout and artwork untouched. */
+.hero-section::before {
+  background: radial-gradient(circle, rgba(241,217,168,.23), rgba(169,111,126,.17) 36%, transparent 70%);
+  filter: blur(22px);
+}
+.hero-copy h1 em {
+  text-shadow: 0 0 18px rgba(241,217,168,.24), 0 0 42px rgba(216,183,123,.28), 0 0 78px rgba(169,111,126,.16);
+}
+.hero-eyebrow {
+  box-shadow: 0 0 18px rgba(216,183,123,.12), inset 0 0 18px rgba(241,217,168,.07);
+}
+.hero-art {
+  filter:
+    drop-shadow(0 0 24px rgba(241,217,168,.22))
+    drop-shadow(0 0 58px rgba(216,183,123,.24))
+    drop-shadow(0 35px 60px rgba(0,0,0,.36));
+}
+.hero-art::before {
+  width: 86%; top: 5%; left: 14%;
+  background: radial-gradient(circle, rgba(255,235,194,.38), rgba(216,183,123,.23) 27%, rgba(169,111,126,.18) 48%, transparent 72%);
+  filter: blur(38px);
+  animation-duration: 4.8s;
+}
+.hero-section .button-gold {
+  box-shadow: 0 0 18px rgba(216,183,123,.26), 0 0 42px rgba(216,183,123,.16), 0 7px 24px rgba(0,0,0,.18);
+}
+.brand-monogram {
+  box-shadow: 0 0 18px rgba(216,183,123,.22), 0 0 36px rgba(216,183,123,.12);
+}
+.collection-card {
+  box-shadow: 0 24px 60px rgba(0,0,0,.24), inset 0 0 45px rgba(241,217,168,.045), 0 0 24px rgba(216,183,123,.055);
+}
+.collection-card:hover {
+  box-shadow: 0 30px 70px rgba(0,0,0,.32), 0 0 22px rgba(216,183,123,.16), 0 0 48px rgba(216,183,123,.10);
+}
+.visual-ring {
+  box-shadow: 0 0 38px rgba(241,217,168,.15), 0 0 92px rgba(216,183,123,.17), inset 0 0 48px rgba(241,217,168,.1);
+}
+.visual-box {
+  box-shadow: 0 24px 45px rgba(0,0,0,.3), 0 0 22px rgba(216,183,123,.16), 0 0 48px rgba(216,183,123,.09);
+}
+.featured-still-life {
+  box-shadow: 0 30px 85px rgba(0,0,0,.3), inset 0 0 70px rgba(241,217,168,.11), 0 0 50px rgba(216,183,123,.10);
+}
+.still-life-halo {
+  box-shadow: 0 0 38px rgba(241,217,168,.22), 0 0 105px rgba(216,183,123,.25), inset 0 0 65px rgba(241,217,168,.14);
+}
+.still-life-box {
+  box-shadow: 0 35px 55px rgba(0,0,0,.4), 0 0 24px rgba(216,183,123,.22), 0 0 52px rgba(216,183,123,.14);
+}
+.still-life-ribbon {
+  filter: drop-shadow(0 0 9px rgba(241,217,168,.32)) drop-shadow(0 0 20px rgba(216,183,123,.22));
+}
+.button-gold, .button-outline {
+  box-shadow: 0 0 22px rgba(216,183,123,.14), 0 7px 24px rgba(0,0,0,.18);
+}
+.button-gold:hover {
+  box-shadow: 0 0 24px rgba(241,217,168,.38), 0 0 54px rgba(216,183,123,.28);
+}
+.button-outline:hover {
+  box-shadow: 0 0 24px rgba(216,183,123,.22), 0 0 42px rgba(216,183,123,.12);
+}
+.inner-hero {
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(169,111,126,.32),transparent 60%),
+    radial-gradient(ellipse at 10% 60%,rgba(216,183,123,.12),transparent 45%),
+    linear-gradient(180deg,#2b1728,#160e19) !important;
+}
+.occasion-tile, .contact-card, .inner-feature-card {
+  box-shadow: 0 18px 50px rgba(0,0,0,.2), inset 0 0 35px rgba(216,183,123,.045), 0 0 22px rgba(216,183,123,.08);
+}
+.occasion-tile:hover, .contact-card:hover, .inner-feature-card:hover {
+  box-shadow: 0 24px 60px rgba(0,0,0,.28), 0 0 24px rgba(216,183,123,.2), 0 0 48px rgba(216,183,123,.10);
+}
+.custom-order-form {
+  box-shadow: 0 30px 90px rgba(0,0,0,.28), inset 0 0 50px rgba(216,183,123,.05), 0 0 38px rgba(216,183,123,.08) !important;
+}
+.custom-order-field input:focus, .custom-order-field select:focus, .custom-order-field textarea:focus {
+  box-shadow: 0 0 0 3px rgba(216,183,123,.17), 0 0 26px rgba(216,183,123,.18) !important;
+}
+.real-work-photo-wrap {
+  box-shadow: 0 28px 75px rgba(0,0,0,.32), 0 0 28px rgba(216,183,123,.12), 0 0 54px rgba(216,183,123,.07);
+}
+.final-ornament { box-shadow: 0 0 100px rgba(216,183,123,.12), inset 0 0 70px rgba(216,183,123,.04); }
+.scroll-progress {
+  box-shadow: 0 0 12px rgba(241,217,168,.75), 0 0 28px rgba(216,183,123,.5);
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art::before { animation: none !important; }
+}
