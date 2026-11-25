@@ -6,6 +6,7 @@ import './globals.css';
 import './store.css';
 import './style.css';
 import './glow.css';
+import './playful.css';
 import SmoothScroll from '@/components/SmoothScroll';
 
 
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: '#492638', width: 'device-width', initialScale: 1 };
+export const viewport: Viewport = { themeColor: '#302044', width: 'device-width', initialScale: 1 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return <html lang="en"><body><SmoothScroll />{children}<Analytics /><Script src="/glow.js" strategy="afterInteractive" /></body></html>;
