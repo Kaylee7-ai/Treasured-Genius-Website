@@ -21,7 +21,7 @@ const GiftScene = dynamic(() => import('@/components/three/GiftScene'), {
 });
 
 function StaticSculpture() {
-  return <div className="hero-static-fallback" role="img" aria-label="A sculptural burgundy gift box wrapped in champagne satin ribbon">
+  return <div className="hero-static-fallback" role="img" aria-label="A floating-lid burgundy keepsake gift box with a glowing champagne-lit interior">
     <div className="fallback-halo" />
     <div className="fallback-gift">
       <span className="fallback-lid" /><span className="fallback-band" />
